@@ -8,11 +8,13 @@ public class Personnage {
     private Grille grille;
     private IntegerProperty xProperty;
     private IntegerProperty yProperty;
+    private Dir direction;
 
     public Personnage(Grille grille, int x, int y) {
         this.grille = grille;
         xProperty = new SimpleIntegerProperty(x);
         yProperty = new SimpleIntegerProperty(y);
+        direction = Dir.bas;
     }
 
     public void seDeplacerHaut() {
@@ -56,14 +58,29 @@ public class Personnage {
     }
 
     public Sommet interactionBois() {
-        if (!grille.getListeBois().contains(new Bois(getX(), getY() - 1))) {
-            grille.placerBois(getX(), getY() - 1);
-            return new Bois(getX(), getY() - 1);
+        Bois bois;
+        switch (direction) {
+            case haut : bois = new Bois(getX(), getY() - 1); break;
+            case bas : bois = new Bois(getX(), getY() + 1); break;
+            case gauche : bois = new Bois(getX() - 1, getY()); break;
+            case droite : bois = new Bois(getX() + 1, getY()); break;
+            default : bois = null; break;
+        }
+        if (!grille.getListeBois().contains(bois)) {
+            grille.placerBois(bois);
+            return bois;
         }
         else {
-            grille.retirerBois(getX(), getY() - 1);
-            return new Sommet(getX(), getY() - 1);
+            grille.retirerBois(bois);
+            return new Sommet(bois.getX(), bois.getY());
         }
     }
 
+    public Dir getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Dir direction) {
+        this.direction = direction;
+    }
 }

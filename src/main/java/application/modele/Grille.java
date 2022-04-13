@@ -80,29 +80,29 @@ public class Grille {
     }
 
     public void ajouterObstacles() {
-        listeBois.add(new Bois(width/2 - 1,height/2 - 2));
         listeBois.add(new Bois(width/2 - 2,height/2 - 2));
+        listeBois.add(new Bois(width/2 - 1,height/2 - 2));
+        listeBois.add(new Bois(width/2,height/2 - 2));
+        listeBois.add(new Bois(width/2 + 1,height/2 - 2));
+        listeBois.add(new Bois(width/2 + 2,height/2 - 2));
         listeBois.add(new Bois(width/2 - 2,height/2 - 1));
         listeBois.add(new Bois(width/2 - 2,height/2));
         listeBois.add(new Bois(width/2 - 2,height/2 + 1));
         listeBois.add(new Bois(width/2 - 2,height/2 + 2));
         listeBois.add(new Bois(width/2 - 1,height/2 + 2));
-        listeBois.add(new Bois(width/2,height/2 + 2));
         listeBois.add(new Bois(width/2 + 1,height/2 + 2));
         listeBois.add(new Bois(width/2 + 2,height/2 + 2));
         listeBois.add(new Bois(width/2 + 2,height/2 + 1));
         listeBois.add(new Bois(width/2 + 2,height/2));
         listeBois.add(new Bois(width/2 + 2,height/2 - 1));
-        listeBois.add(new Bois(width/2 + 2,height/2 - 2));
-        listeBois.add(new Bois(width/2 + 1,height/2 - 2));
     }
 
-    public void placerBois(int x, int y) {
-        listeBois.add(new Bois(x,y));
+    public void placerBois(Bois bois) {
+        listeBois.add(bois);
     }
 
-    public void retirerBois(int x, int y) {
-        listeBois.remove(new Bois(x,y));
+    public void retirerBois(Bois bois) {
+        listeBois.remove(bois);
     }
 
     public Set<Sommet> adjacents(Sommet s) {
