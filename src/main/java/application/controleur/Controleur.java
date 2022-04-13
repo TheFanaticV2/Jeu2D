@@ -7,6 +7,7 @@ import application.modele.Grille;
 import application.modele.Sommet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -20,11 +21,10 @@ public class Controleur implements Initializable {
 
     private Grille grille;
 
-    @FXML
-    private Pane tuiles;
-
-    @FXML
-    private StackPane perso;
+    @FXML private Pane tuiles;
+    @FXML private StackPane perso;
+    @FXML private Label bois;
+    @FXML private Label inventaire;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,6 +32,8 @@ public class Controleur implements Initializable {
         contruireMap();
         construirePerso();
         construireBois();
+        inventaire.textProperty().bind(grille.getPerso().getInventaire().getStockageTotalProperty().asString());
+        bois.textProperty().bind(grille.getPerso().getInventaire().getNbBoisProperty().asString());
     }
 
     private void contruireMap() {
@@ -52,9 +54,6 @@ public class Controleur implements Initializable {
         perso.translateYProperty().bind(grille.getPerso().getYProperty().multiply(Param.TUILE_TAILLE));
         for (int i = 0; i < perso.getChildren().size(); i++)
             perso.getChildren().get(i).setVisible(false);
-        for (int i = 0; i < perso.getChildren().size(); i++) {
-            perso.getChildren().get(i);
-        }
         perso.getChildren().get(3).setVisible(true);
     }
 
@@ -69,7 +68,7 @@ public class Controleur implements Initializable {
             ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setFill(Param.TUILE_BOIS_COULEUR);
             ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStrokeWidth(Param.TUILE_BOIS_TAILLE_BORDURE);
             ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStroke(Param.TUILE_BOIS_BORDURE_COULEUR);
-        } else
+        } else if (s != null)
             affichageTuile(s);
     }
 

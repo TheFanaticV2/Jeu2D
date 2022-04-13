@@ -8,12 +8,14 @@ public class Personnage {
     private Grille grille;
     private IntegerProperty xProperty;
     private IntegerProperty yProperty;
+    private Inventaire inventaire;
     private Dir direction;
 
     public Personnage(Grille grille, int x, int y) {
         this.grille = grille;
         xProperty = new SimpleIntegerProperty(x);
         yProperty = new SimpleIntegerProperty(y);
+        inventaire = new Inventaire();
         direction = Dir.bas;
     }
 
@@ -66,14 +68,17 @@ public class Personnage {
             case droite : bois = new Bois(getX() + 1, getY()); break;
             default : bois = null; break;
         }
-        if (!grille.getListeBois().contains(bois)) {
-            grille.placerBois(bois);
-            return bois;
-        }
-        else {
+        if (grille.getListeBois().contains(bois) && !inventaire.plein()) {
+            inventaire.ajouterBois();
             grille.retirerBois(bois);
             return new Sommet(bois.getX(), bois.getY());
         }
+        else if (!grille.getListeBois().contains(bois) && inventaire.possedeBois()){
+            inventaire.retirerBois();
+            grille.placerBois(bois);
+            return bois;
+        }
+        return null;
     }
 
     public Dir getDirection() {
@@ -82,5 +87,9 @@ public class Personnage {
 
     public void setDirection(Dir direction) {
         this.direction = direction;
+    }
+
+    public Inventaire getInventaire() {
+        return inventaire;
     }
 }

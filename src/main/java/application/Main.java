@@ -14,7 +14,7 @@ public class Main extends Application {
             Scene scene = new Scene(root, Param.WIDTH*Param.TUILE_TAILLE, Param.HEIGHT*Param.TUILE_TAILLE);
             root.requestFocus();
             primaryStage.setTitle("Deplacement");
-            //primaryStage.setResizable(false);
+            primaryStage.setResizable(false);
             primaryStage.setMaximized(true);
             primaryStage.setScene(scene);
             primaryStage.show();
