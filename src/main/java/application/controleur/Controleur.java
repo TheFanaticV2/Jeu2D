@@ -7,7 +7,6 @@ import application.modele.Grille;
 import application.modele.Sommet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -23,8 +22,6 @@ public class Controleur implements Initializable {
 
     @FXML
     private Pane tuiles;
-    @FXML
-    private Pane mapPerso;
 
     @FXML
     private StackPane perso;
@@ -56,8 +53,10 @@ public class Controleur implements Initializable {
         perso.translateXProperty().bind(grille.getPerso().getXProperty().multiply(Param.TUILE_TAILLE));
         perso.translateYProperty().bind(grille.getPerso().getYProperty().multiply(Param.TUILE_TAILLE));
         //mapPerso.getChildren().add(perso);
-        mapPerso.toFront();
-        affichagePerso();
+        //mapPerso.toFront();
+        for (int i = 0; i < perso.getChildren().size(); i++)
+            perso.getChildren().get(i).setVisible(false);
+        perso.getChildren().get(3).setVisible(true);
     }
 
     private void construireBois() {
@@ -82,25 +81,86 @@ public class Controleur implements Initializable {
     }
 
     private void affichagePerso() {
-        for (int i = 0; i  < perso.getChildren().size(); i++)
-            perso.getChildren().get(i).setVisible(false);
+
+        int i = 0;
+        while (!perso.getChildren().get(i).isVisible()) i++;
+        perso.getChildren().get(i).setVisible(false);
+
         switch (grille.getPerso().getDirection()) {
-            case haut : perso.getChildren().get(0).setVisible(true); break;
-            case bas : perso.getChildren().get(1).setVisible(true); break;
-            case gauche : perso.getChildren().get(2).setVisible(true); break;
-            case droite : perso.getChildren().get(3).setVisible(true); break;
-            default: break;
+            case haut:
+                if (i == 1)
+                    perso.getChildren().get(2).setVisible(true);
+                else
+                    perso.getChildren().get(1).setVisible(true);
+                break;
+            case bas:
+                if (i == 4)
+                    perso.getChildren().get(5).setVisible(true);
+                else
+                    perso.getChildren().get(4).setVisible(true);
+                break;
+            case gauche:
+                if (i == 7)
+                    perso.getChildren().get(8).setVisible(true);
+                else
+                    perso.getChildren().get(7).setVisible(true);
+                break;
+            case droite:
+                if (i == 10)
+                    perso.getChildren().get(11).setVisible(true);
+                else
+                    perso.getChildren().get(10).setVisible(true);
+                break;
+            default:
+                break;
+        }
+
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
     public void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
-            case Z : grille.getPerso().setDirection(Dir.haut); grille.getPerso().seDeplacerHaut(); affichagePerso(); break;
-            case S : grille.getPerso().setDirection(Dir.bas); grille.getPerso().seDeplacerBas(); affichagePerso(); break;
-            case Q : grille.getPerso().setDirection(Dir.gauche); grille.getPerso().seDeplacerGauche(); affichagePerso(); break;
-            case D : grille.getPerso().setDirection(Dir.droite); grille.getPerso().seDeplacerDroite(); affichagePerso(); break;
-            case P : affichageBois(grille.getPerso().interactionBois()); break;
+            case Z:
+                if (grille.getPerso().getDirection() == Dir.haut)
+                    grille.getPerso().seDeplacerHaut();
+                grille.getPerso().setDirection(Dir.haut);
+                affichagePerso(); break;
+            case S:
+                if (grille.getPerso().getDirection() == Dir.bas)
+                    grille.getPerso().seDeplacerBas();
+                grille.getPerso().setDirection(Dir.bas);
+                affichagePerso(); break;
+            case Q:
+                if (grille.getPerso().getDirection() == Dir.gauche)
+                    grille.getPerso().seDeplacerGauche();
+                grille.getPerso().setDirection(Dir.gauche);
+                affichagePerso(); break;
+            case D:
+                if (grille.getPerso().getDirection() == Dir.droite)
+                    grille.getPerso().seDeplacerDroite();
+                grille.getPerso().setDirection(Dir.droite);
+                affichagePerso(); break;
+            case P:
+                affichageBois(grille.getPerso().interactionBois()); break;
+            default: break;
+        }
+    }
+
+    @FXML
+    public void keyReleased(KeyEvent event) {
+        for (int i = 0; i  < perso.getChildren().size(); i++)
+            perso.getChildren().get(i).setVisible(false);
+
+        switch (grille.getPerso().getDirection()) {
+            case haut : perso.getChildren().get(0).setVisible(true); break;
+            case bas : perso.getChildren().get(3).setVisible(true); break;
+            case gauche : perso.getChildren().get(6).setVisible(true); break;
+            case droite : perso.getChildren().get(9).setVisible(true); break;
             default: break;
         }
     }
