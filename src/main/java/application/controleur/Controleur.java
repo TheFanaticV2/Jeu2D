@@ -48,14 +48,13 @@ public class Controleur implements Initializable {
     }
 
     private void construirePerso() {
-        //perso = new Rectangle(Param.TUILE_TAILLE, Param.TUILE_TAILLE);
-        //perso.setFill(Param.PERSO_COULEUR);
         perso.translateXProperty().bind(grille.getPerso().getXProperty().multiply(Param.TUILE_TAILLE));
         perso.translateYProperty().bind(grille.getPerso().getYProperty().multiply(Param.TUILE_TAILLE));
-        //mapPerso.getChildren().add(perso);
-        //mapPerso.toFront();
         for (int i = 0; i < perso.getChildren().size(); i++)
             perso.getChildren().get(i).setVisible(false);
+        for (int i = 0; i < perso.getChildren().size(); i++) {
+            perso.getChildren().get(i);
+        }
         perso.getChildren().get(3).setVisible(true);
     }
 
@@ -81,7 +80,6 @@ public class Controleur implements Initializable {
     }
 
     private void affichagePerso() {
-
         int i = 0;
         while (!perso.getChildren().get(i).isVisible()) i++;
         perso.getChildren().get(i).setVisible(false);
@@ -116,7 +114,7 @@ public class Controleur implements Initializable {
         }
 
         try {
-            Thread.sleep(150);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
