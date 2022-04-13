@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="map" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controleur.Controleur">
+   <children>
+      <Pane fx:id="tuiles" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="mapPerso" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="perso" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@sprite/tile004.png" />
+               </image></ImageView>
+         </children></Pane>
+   </children>
+</StackPane>
