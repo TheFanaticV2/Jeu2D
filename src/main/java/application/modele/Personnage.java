@@ -107,25 +107,25 @@ public class Personnage {
         }
     }
 
-    public void seDeplacerHaut() throws ObstacleException {
-        if (grille.estUnObstacle(x, y - 1)) throw new ObstacleException();
-        else if(grille.dansGrille(x, y - 1)) y--;
-    }
-
-    public void seDeplacerBas() throws ObstacleException {
-        if (grille.estUnObstacle(x, y + 1)) throw new ObstacleException();
-        else if(grille.dansGrille(x, y + 1)) y++;
-    }
-
-    public void seDeplacerGauche() throws ObstacleException {
-        if (grille.estUnObstacle(x - 1, y)) throw new ObstacleException();
-        else if(grille.dansGrille(x - 1, y)) x--;
-    }
-
-    public void seDeplacerDroite() throws ObstacleException {
-        if (grille.estUnObstacle(x + 1, y)) throw new ObstacleException();
-        else if(grille.dansGrille(x + 1, y)) x++;
-    }
+//    public void seDeplacerHaut() throws ObstacleException {
+//        if (grille.estUnObstacle(x, y - 1)) throw new ObstacleException();
+//        else if(grille.dansGrille(x, y - 1)) y--;
+//    }
+//
+//    public void seDeplacerBas() throws ObstacleException {
+//        if (grille.estUnObstacle(x, y + 1)) throw new ObstacleException();
+//        else if(grille.dansGrille(x, y + 1)) y++;
+//    }
+//
+//    public void seDeplacerGauche() throws ObstacleException {
+//        if (grille.estUnObstacle(x - 1, y)) throw new ObstacleException();
+//        else if(grille.dansGrille(x - 1, y)) x--;
+//    }
+//
+//    public void seDeplacerDroite() throws ObstacleException {
+//        if (grille.estUnObstacle(x + 1, y)) throw new ObstacleException();
+//        else if(grille.dansGrille(x + 1, y)) x++;
+//    }
 
     public final int getX() {
         return x;

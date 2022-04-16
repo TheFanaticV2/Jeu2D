@@ -78,58 +78,6 @@ public class Controleur implements Initializable {
         ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStroke(Param.TUILE_BORDURE_COULEUR);
     }
 
-    private void affichagePerso() {
-            animationSpritePerso.start();
-    }
-
-    /*@FXML
-    public void keyPressed(KeyEvent event) {
-        if (!animationSpritePerso.isRunning())
-            switch (event.getCode()) {
-                case Z:
-                    if (grille.getPerso().getDirection() == Dir.haut) {
-                        try {
-                            grille.getPerso().seDeplacerHaut();
-                            affichagePerso();
-                        } catch (ObstacleException e) {
-                        }
-                    } else grille.getPerso().setDirection(Dir.haut);
-                    break;
-                case S:
-                    if (grille.getPerso().getDirection() == Dir.bas) {
-                        try {
-                            grille.getPerso().seDeplacerBas();
-                            affichagePerso();
-                        } catch (ObstacleException e) {
-                        }
-                    } else grille.getPerso().setDirection(Dir.bas);
-                    break;
-                case Q:
-                    if (grille.getPerso().getDirection() == Dir.gauche) {
-                        try {
-                            grille.getPerso().seDeplacerGauche();
-                            affichagePerso();
-                        } catch (ObstacleException e) {
-                        }
-                    } else grille.getPerso().setDirection(Dir.gauche);
-                    break;
-                case D:
-                    if (grille.getPerso().getDirection() == Dir.droite) {
-                        try {
-                            grille.getPerso().seDeplacerDroite();
-                            affichagePerso();
-                        } catch (ObstacleException e) {
-                        }
-                    } else grille.getPerso().setDirection(Dir.droite);
-                    break;
-                case P:
-                    affichageBois(grille.getPerso().interactionBois());
-                    break;
-                default:
-                    break;
-            }
-    }*/
-
     public void keyPressed(KeyEvent event) {
         if (!animationSpritePerso.isRunning())
             switch (event.getCode()) {
