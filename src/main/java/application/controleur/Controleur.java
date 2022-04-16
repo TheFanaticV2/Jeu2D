@@ -1,10 +1,7 @@
 package application.controleur;
 
 import application.Param;
-import application.modele.Bois;
-import application.modele.Dir;
-import application.modele.Grille;
-import application.modele.Sommet;
+import application.modele.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
