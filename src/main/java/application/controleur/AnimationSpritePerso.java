@@ -17,8 +17,8 @@ public class AnimationSpritePerso extends AnimationTimer {
         this.grille = grille;
         this.spritesPerso = SpritesPerso;
         this.lastUpdate = 0;
-        this.latence = 60_000_000;
-        this.decalage = Param.TUILE_TAILLE - Param.TUILE_TAILLE/4;
+        this.latence = 75_000_000;
+        this.decalage = Param.TUILE_TAILLE - Param.TUILE_TAILLE/3;
         this.running = false;
     }
 
@@ -42,7 +42,7 @@ public class AnimationSpritePerso extends AnimationTimer {
             //System.out.println(now);
         } else if (decalage < 0) {
             immobile();
-            decalage = Param.TUILE_TAILLE - Param.TUILE_TAILLE/4;
+            decalage = Param.TUILE_TAILLE - Param.TUILE_TAILLE/3;
             stop();
         }
 
@@ -80,7 +80,7 @@ public class AnimationSpritePerso extends AnimationTimer {
                 break;
             default: break;
         }
-        decalage-=Param.TUILE_TAILLE/4;
+        decalage-=Param.TUILE_TAILLE/3;
     }
 
     public void immobile() {

@@ -5,11 +5,11 @@ import application.modele.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,33 +18,47 @@ public class Controleur implements Initializable {
 
     private Grille grille;
     private AnimationSpritePerso animationSpritePerso;
+    private Image imageBois;
 
-    @FXML private Pane tuiles;
+    @FXML private Pane tuilesFond, tuilesPerso, tuilesObjet;
     @FXML private StackPane spritesPerso;
     @FXML private Label bois;
     @FXML private Label inventaire;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         grille = new Grille(Param.WIDTH, Param.HEIGHT);
-        contruireMap();
-        construirePerso();
-        construireBois();
         inventaire.textProperty().bind(grille.getPerso().getInventaire().getStockageTotalProperty().asString());
         bois.textProperty().bind(grille.getPerso().getInventaire().getNbBoisProperty().asString());
         animationSpritePerso = new AnimationSpritePerso(grille, spritesPerso);
+        imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
+        contruireMap();
+        construirePerso();
+        construireBois();
     }
 
+//    private void contruireMap() {
+//        Rectangle rectangle;
+//        for (int i = 0; i < Param.WIDTH; i++)
+//            for (int j = 0; j < Param.HEIGHT; j++) {
+//                rectangle = new Rectangle(i * Param.TUILE_TAILLE, j * Param.TUILE_TAILLE, Param.TUILE_TAILLE, Param.TUILE_TAILLE);
+//                rectangle.setFill(Param.TUILE_NORMAL_COULEUR);
+//                rectangle.setStrokeType(StrokeType.INSIDE);
+//                rectangle.setStroke(Param.TUILE_BORDURE_COULEUR);
+//                rectangle.setStrokeWidth(Param.TUILE_TAILLE_BORDURE);
+//                tuiles.getChildren().add(rectangle);
+//            }
+//    }
+
     private void contruireMap() {
-        Rectangle rectangle;
+        ImageView img;
         for (int i = 0; i < Param.WIDTH; i++)
             for (int j = 0; j < Param.HEIGHT; j++) {
-                rectangle = new Rectangle(i* Param.TUILE_TAILLE, j* Param.TUILE_TAILLE, Param.TUILE_TAILLE, Param.TUILE_TAILLE);
-                rectangle.setFill(Param.TUILE_NORMAL_COULEUR);
-                rectangle.setStrokeType(StrokeType.INSIDE);
-                rectangle.setStroke(Param.TUILE_BORDURE_COULEUR);
-                rectangle.setStrokeWidth(Param.TUILE_TAILLE_BORDURE);
-                tuiles.getChildren().add(rectangle);
+                img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png"));
+                img.setFitWidth(Param.TUILE_TAILLE);
+                img.setFitHeight(Param.TUILE_TAILLE);
+                img.setX(i * Param.TUILE_TAILLE);
+                img.setY(j * Param.TUILE_TAILLE);
+                tuilesFond.getChildren().add(img);
             }
     }
 
@@ -60,24 +74,30 @@ public class Controleur implements Initializable {
 
     private void construireBois() {
         for (Bois bois : grille.getListeBois()) {
-            affichageBois(bois );
+            affichageBois(bois);
         }
     }
 
     private void affichageBois(Sommet s) {
-        if (s instanceof Bois) {
-            ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setFill(Param.TUILE_BOIS_COULEUR);
-            ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStrokeWidth(Param.TUILE_BOIS_TAILLE_BORDURE);
-            ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStroke(Param.TUILE_BOIS_BORDURE_COULEUR);
-        } else if (s != null)
-            affichageTuile(s);
+        if (s instanceof Bois) { //poser bois
+            ImageView img = new ImageView(imageBois);
+            img.setFitWidth(Param.TUILE_TAILLE);
+            img.setFitHeight(Param.TUILE_TAILLE);
+            img.setX(s.getX() * Param.TUILE_TAILLE);
+            img.setY(s.getY() * Param.TUILE_TAILLE);
+            tuilesObjet.getChildren().add(img);
+        } else if (s != null) { //retirer bois
+            int i = 0;
+            while (((ImageView) tuilesObjet.getChildren().get(i)).getX() != s.getX() * Param.TUILE_TAILLE || ((ImageView) tuilesObjet.getChildren().get(i)).getY() != s.getY() * Param.TUILE_TAILLE) i++;
+            tuilesObjet.getChildren().remove(i);
+        }
     }
 
-    private void affichageTuile(Sommet s) {
-        ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setFill(Param.TUILE_NORMAL_COULEUR);
-        ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStrokeWidth(Param.TUILE_TAILLE_BORDURE);
-        ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStroke(Param.TUILE_BORDURE_COULEUR);
-    }
+//    private void affichageTuile(Sommet s) {
+//        ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setFill(Param.TUILE_NORMAL_COULEUR);
+//        ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStrokeWidth(Param.TUILE_TAILLE_BORDURE);
+//        ((Rectangle) tuiles.getChildren().get(s.getX() * Param.HEIGHT + s.getY())).setStroke(Param.TUILE_BORDURE_COULEUR);
+//    }
 
     public void keyPressed(KeyEvent event) {
         if (!animationSpritePerso.isRunning())

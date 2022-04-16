@@ -3,9 +3,9 @@ package application;
 import javafx.scene.paint.Color;
 
 public class Param {
-    public final static int WIDTH = 26;
-    public final static int HEIGHT = 14;
-    public final static int TUILE_TAILLE = 50;
+    public final static int WIDTH = 27;
+    public final static int HEIGHT = 15;
+    public final static int TUILE_TAILLE = 48;
     public final static double TUILE_TAILLE_BORDURE = 1;
     public final static double TUILE_BOIS_TAILLE_BORDURE = 6.5;
 
