@@ -1,10 +1,8 @@
 package application.controleur;
 
 import application.Param;
-import application.modele.Bois;
-import application.modele.Dir;
-import application.modele.Grille;
-import application.modele.Sommet;
+import application.modele.*;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyEvent;
@@ -19,12 +17,13 @@ import java.util.ResourceBundle;
 public class Controleur implements Initializable {
 
     private Grille grille;
+    private AnimationSpritePerso animationSpritePerso;
 
     @FXML
     private Pane tuiles;
 
     @FXML
-    private StackPane perso;
+    private StackPane spritesPerso;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,6 +31,7 @@ public class Controleur implements Initializable {
         contruireMap();
         construirePerso();
         construireBois();
+        animationSpritePerso = new AnimationSpritePerso(grille, spritesPerso);
     }
 
     private void contruireMap() {
@@ -48,14 +48,13 @@ public class Controleur implements Initializable {
     }
 
     private void construirePerso() {
-        perso.translateXProperty().bind(grille.getPerso().getXProperty().multiply(Param.TUILE_TAILLE));
-        perso.translateYProperty().bind(grille.getPerso().getYProperty().multiply(Param.TUILE_TAILLE));
-        for (int i = 0; i < perso.getChildren().size(); i++)
-            perso.getChildren().get(i).setVisible(false);
-        for (int i = 0; i < perso.getChildren().size(); i++) {
-            perso.getChildren().get(i);
-        }
-        perso.getChildren().get(3).setVisible(true);
+        //spritesPerso.translateXProperty().bind(grille.getPerso().getXProperty().multiply(Param.TUILE_TAILLE));
+        //spritesPerso.translateYProperty().bind(grille.getPerso().getYProperty().multiply(Param.TUILE_TAILLE));
+        spritesPerso.setTranslateX(grille.getPerso().getX() * (Param.TUILE_TAILLE));
+        spritesPerso.setTranslateY(grille.getPerso().getY() * (Param.TUILE_TAILLE));
+        for (int i = 0; i < spritesPerso.getChildren().size(); i++)
+            spritesPerso.getChildren().get(i).setVisible(false);
+        spritesPerso.getChildren().get(3).setVisible(true);
     }
 
     private void construireBois() {
@@ -80,86 +79,101 @@ public class Controleur implements Initializable {
     }
 
     private void affichagePerso() {
-        int i = 0;
-        while (!perso.getChildren().get(i).isVisible()) i++;
-        perso.getChildren().get(i).setVisible(false);
-
-        switch (grille.getPerso().getDirection()) {
-            case haut:
-                if (i == 1)
-                    perso.getChildren().get(2).setVisible(true);
-                else
-                    perso.getChildren().get(1).setVisible(true);
-                break;
-            case bas:
-                if (i == 4)
-                    perso.getChildren().get(5).setVisible(true);
-                else
-                    perso.getChildren().get(4).setVisible(true);
-                break;
-            case gauche:
-                if (i == 7)
-                    perso.getChildren().get(8).setVisible(true);
-                else
-                    perso.getChildren().get(7).setVisible(true);
-                break;
-            case droite:
-                if (i == 10)
-                    perso.getChildren().get(11).setVisible(true);
-                else
-                    perso.getChildren().get(10).setVisible(true);
-                break;
-            default:
-                break;
-        }
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            animationSpritePerso.start();
     }
 
-    @FXML
+    /*@FXML
     public void keyPressed(KeyEvent event) {
-        switch (event.getCode()) {
-            case Z:
-                if (grille.getPerso().getDirection() == Dir.haut)
-                    grille.getPerso().seDeplacerHaut();
-                grille.getPerso().setDirection(Dir.haut);
-                affichagePerso(); break;
-            case S:
-                if (grille.getPerso().getDirection() == Dir.bas)
-                    grille.getPerso().seDeplacerBas();
-                grille.getPerso().setDirection(Dir.bas);
-                affichagePerso(); break;
-            case Q:
-                if (grille.getPerso().getDirection() == Dir.gauche)
-                    grille.getPerso().seDeplacerGauche();
-                grille.getPerso().setDirection(Dir.gauche);
-                affichagePerso(); break;
-            case D:
-                if (grille.getPerso().getDirection() == Dir.droite)
-                    grille.getPerso().seDeplacerDroite();
-                grille.getPerso().setDirection(Dir.droite);
-                affichagePerso(); break;
-            case P:
-                affichageBois(grille.getPerso().interactionBois()); break;
-            default: break;
-        }
-    }
+        if (!animationSpritePerso.isRunning())
+            switch (event.getCode()) {
+                case Z:
+                    if (grille.getPerso().getDirection() == Dir.haut) {
+                        try {
+                            grille.getPerso().seDeplacerHaut();
+                            affichagePerso();
+                        } catch (ObstacleException e) {
+                        }
+                    } else grille.getPerso().setDirection(Dir.haut);
+                    break;
+                case S:
+                    if (grille.getPerso().getDirection() == Dir.bas) {
+                        try {
+                            grille.getPerso().seDeplacerBas();
+                            affichagePerso();
+                        } catch (ObstacleException e) {
+                        }
+                    } else grille.getPerso().setDirection(Dir.bas);
+                    break;
+                case Q:
+                    if (grille.getPerso().getDirection() == Dir.gauche) {
+                        try {
+                            grille.getPerso().seDeplacerGauche();
+                            affichagePerso();
+                        } catch (ObstacleException e) {
+                        }
+                    } else grille.getPerso().setDirection(Dir.gauche);
+                    break;
+                case D:
+                    if (grille.getPerso().getDirection() == Dir.droite) {
+                        try {
+                            grille.getPerso().seDeplacerDroite();
+                            affichagePerso();
+                        } catch (ObstacleException e) {
+                        }
+                    } else grille.getPerso().setDirection(Dir.droite);
+                    break;
+                case P:
+                    affichageBois(grille.getPerso().interactionBois());
+                    break;
+                default:
+                    break;
+            }
+    }*/
 
+    public void keyPressed(KeyEvent event) {
+        if (!animationSpritePerso.isRunning())
+            switch (event.getCode()) {
+                case Z:
+                    if (grille.getPerso().getDirection() == Dir.haut) {
+                        try {
+                            grille.getPerso().seDeplacer(0,-1);
+                            animationSpritePerso.start();
+                        } catch (ObstacleException e) {}
+                    } else grille.getPerso().setDirection(Dir.haut);
+                    break;
+                case S:
+                    if (grille.getPerso().getDirection() == Dir.bas) {
+                        try {
+                            grille.getPerso().seDeplacer(0,1);
+                            animationSpritePerso.start();
+                        } catch (ObstacleException e) {}
+                    } else grille.getPerso().setDirection(Dir.bas);
+                    break;
+                case Q:
+                    if (grille.getPerso().getDirection() == Dir.gauche) {
+                        try {
+                            grille.getPerso().seDeplacer(-1,0);
+                            animationSpritePerso.start();
+                        } catch (ObstacleException e) {}
+                    } else grille.getPerso().setDirection(Dir.gauche);
+                    break;
+                case D:
+                    if (grille.getPerso().getDirection() == Dir.droite) {
+                        try {
+                            grille.getPerso().seDeplacer(1,0);
+                            animationSpritePerso.start();
+                        } catch (ObstacleException e) {}
+                    } else grille.getPerso().setDirection(Dir.droite);
+                    break;
+                case P:
+                    affichageBois(grille.getPerso().interactionBois());
+                    break;
+                default:
+                    break;
+            }
+    }
     @FXML
     public void keyReleased(KeyEvent event) {
-        for (int i = 0; i  < perso.getChildren().size(); i++)
-            perso.getChildren().get(i).setVisible(false);
-
-        switch (grille.getPerso().getDirection()) {
-            case haut : perso.getChildren().get(0).setVisible(true); break;
-            case bas : perso.getChildren().get(3).setVisible(true); break;
-            case gauche : perso.getChildren().get(6).setVisible(true); break;
-            case droite : perso.getChildren().get(9).setVisible(true); break;
-            default: break;
-        }
+        animationSpritePerso.immobile();
     }
 }
