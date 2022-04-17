@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             StackPane root = FXMLLoader.load(getClass().getResource("vue.fxml"));
-            Scene scene = new Scene(root, Param.WIDTH*Param.TUILE_TAILLE, Param.HEIGHT*Param.TUILE_TAILLE);
+            Scene scene = new Scene(root, 27*48, 15*48);
             root.requestFocus();
             primaryStage.setTitle("Deplacement");
             primaryStage.setResizable(false);
