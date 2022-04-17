@@ -10,56 +10,24 @@ import javafx.scene.input.KeyEvent;
 public class KeyPressed implements EventHandler<KeyEvent> {
 
     private Grille grille;
-    private AnimationSpritePerso animationSpritePerso;
-    private Controleur controleur;
+    private GameLoop gameLoop;
 
-    public KeyPressed(Controleur controleur, Grille grille, AnimationSpritePerso animationSpritePerso) {
-        this.controleur = controleur;
+    public KeyPressed(Grille grille, GameLoop gameLoop) {
         this.grille = grille;
-        this.animationSpritePerso = animationSpritePerso;
+        this.gameLoop = gameLoop;
     }
 
     @Override
     public void handle(KeyEvent event) {
-        if (!animationSpritePerso.isRunning())
-            switch (event.getCode()) {
-                case Z:
-                    if (grille.getPerso().getDirection() == Dir.haut) {
-                        try {
-                            grille.getPerso().seDeplacer(0,-1);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.haut);
-                    break;
-                case S:
-                    if (grille.getPerso().getDirection() == Dir.bas) {
-                        try {
-                            grille.getPerso().seDeplacer(0,1);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.bas);
-                    break;
-                case Q:
-                    if (grille.getPerso().getDirection() == Dir.gauche) {
-                        try {
-                            grille.getPerso().seDeplacer(-1,0);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.gauche);
-                    break;
-                case D:
-                    if (grille.getPerso().getDirection() == Dir.droite) {
-                        try {
-                            grille.getPerso().seDeplacer(1,0);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.droite);
-                    break;
-                case P:
-                    controleur.affichageBois(grille.getPerso().interactionBois());
-                    break;
-                default:
-                    break;
+        switch (event.getCode()) {
+            case Z: grille.getPerso().setDirection(Dir.haut); gameLoop.setSeDeplace(true); break;
+            case S: grille.getPerso().setDirection(Dir.bas); gameLoop.setSeDeplace(true); break;
+            case Q: grille.getPerso().setDirection(Dir.gauche); gameLoop.setSeDeplace(true); break;
+            case D: grille.getPerso().setDirection(Dir.droite); gameLoop.setSeDeplace(true); break;
+            case P: //poser bois
+                //controleur.affichageBois(grille.getPerso().interactionBois());
+                break;
+                default: break;
             }
     }
 }

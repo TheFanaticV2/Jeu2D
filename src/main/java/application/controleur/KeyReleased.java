@@ -5,14 +5,14 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyReleased implements EventHandler<KeyEvent> {
 
-    private AnimationSpritePerso animationSpritePerso;
+    private GameLoop gameLoop;
 
-    public KeyReleased(AnimationSpritePerso animationSpritePerso) {
-        this.animationSpritePerso = animationSpritePerso;
+    public KeyReleased(GameLoop gameLoop) {
+        this.gameLoop = gameLoop;
     }
 
     @Override
     public void handle(KeyEvent event) {
-        animationSpritePerso.immobile();
+        gameLoop.setSeDeplace(false);
     }
 }

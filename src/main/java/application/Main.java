@@ -1,5 +1,6 @@
 package application;
 
+import application.controleur.GameLoop;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,7 +14,7 @@ public class Main extends Application {
             StackPane root = FXMLLoader.load(getClass().getResource("vue.fxml"));
             Scene scene = new Scene(root, 27*48, 15*48);
             root.requestFocus();
-            primaryStage.setTitle("Deplacement");
+            primaryStage.setTitle("Jeu 2D");
             primaryStage.setResizable(false);
             primaryStage.setMaximized(true);
             primaryStage.setScene(scene);

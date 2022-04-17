@@ -9,6 +9,7 @@ public class Personnage {
     private int x;
     private int y;
     private Dir direction;
+    private Dir dirPrecedente;
     private Inventaire inventaire;
 
     public Personnage(Grille grille, int x, int y) {
@@ -16,6 +17,7 @@ public class Personnage {
         this.x = x;
         this.y = y;
         direction = Dir.bas;
+        dirPrecedente = Dir.bas;
         inventaire = new Inventaire();
     }
 
@@ -83,7 +85,12 @@ public class Personnage {
     }
 
     public void setDirection(Dir direction) {
+        dirPrecedente = this.direction;
         this.direction = direction;
+    }
+
+    public boolean memeDirection() {
+        return direction == dirPrecedente;
     }
 
     public Inventaire getInventaire() {

@@ -21,26 +21,24 @@ public class Controleur implements Initializable {
     private AnimationSpritePerso animationSpritePerso;
     private Image imageBois;
 
-    @FXML private StackPane root;
-    @FXML private Pane tuilesFond, tuilesObjet;
-    @FXML private StackPane spritesPerso;
-    @FXML private Label bois;
-    @FXML private Label inventaire;
-    
+    @FXML
+    private StackPane root;
+    @FXML
+    private Pane tuilesFond, tuilesObjet;
+    @FXML
+    private StackPane spritesPerso;
+    @FXML
+    private Label bois;
+    @FXML
+    private Label inventaire;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        grille = new Grille(27, 15);
-        inventaire.textProperty().bind(grille.getPerso().getInventaire().getStockageTotalProperty().asString());
-        bois.textProperty().bind(grille.getPerso().getInventaire().getNbBoisProperty().asString());
-        animationSpritePerso = new AnimationSpritePerso(grille, spritesPerso);
-        imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
-        contruireMap();
-        construirePerso();
-        construireBois();
-        root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, grille, animationSpritePerso));
-        root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
+        GameLoop gameLoop = new GameLoop(root, tuilesFond, tuilesObjet, spritesPerso, bois, inventaire);
+        gameLoop.star();
     }
-
+}
+/*
     private void contruireMap() {
         ImageView img;
         for (int i = 0; i < grille.getWidth(); i++)
@@ -83,3 +81,4 @@ public class Controleur implements Initializable {
         }
     }
 }
+*/
