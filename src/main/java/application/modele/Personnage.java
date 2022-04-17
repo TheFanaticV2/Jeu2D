@@ -89,6 +89,10 @@ public class Personnage {
         this.direction = direction;
     }
 
+    public Dir getDirPrecedente() {
+        return dirPrecedente;
+    }
+
     public boolean memeDirection() {
         return direction == dirPrecedente;
     }

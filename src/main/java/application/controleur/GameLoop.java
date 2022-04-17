@@ -98,21 +98,21 @@ public class GameLoop implements Runnable {
 
     private void tick() {
         //deplacement
-        if(!grille.getPerso().memeDirection() || !seDeplace) {
-            animationSpritePerso.immobile();
-        }
-        else if (!animationSpritePerso.isRunning() && grille.getPerso().memeDirection()) {
-            try {
-                switch (grille.getPerso().getDirection()) {
-                    case haut: grille.getPerso().seDeplacer(0, -1); break;
-                    case bas: grille.getPerso().seDeplacer(0, 1); break;
-                    case gauche: grille.getPerso().seDeplacer(-1, 0); break;
-                    case droite: grille.getPerso().seDeplacer(1, 0); break;
-                    default: break;
+        if (!animationSpritePerso.isRunning()) {
+            if (!grille.getPerso().memeDirection() || !seDeplace) {
+                animationSpritePerso.immobile();
+            } else {
+                try {
+                    switch (grille.getPerso().getDirection()) {
+                        case haut: grille.getPerso().seDeplacer(0, -1); break;
+                        case bas: grille.getPerso().seDeplacer(0, 1); break;
+                        case gauche: grille.getPerso().seDeplacer(-1, 0); break;
+                        case droite: grille.getPerso().seDeplacer(1, 0); break;
+                    }
+                    animationSpritePerso.start();
+                } catch (ObstacleException e) {
+                    seDeplace = false;
                 }
-                animationSpritePerso.start();
-            } catch (ObstacleException e) {
-                seDeplace = false;
             }
         }
     }
