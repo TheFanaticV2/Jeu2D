@@ -10,8 +10,9 @@ public class Personnage {
     private int y;
     private Dir direction;
     private Dir dirPrecedente;
-    private boolean seDeplace, sEstDeplace, aChangeDeDirection;
+    private boolean seDeplace, sEstDeplace, aChangeDeDirection, interagitBois;
     private Inventaire inventaire;
+    private Sommet boisInteraction;
 
     public Personnage(Grille grille, int x, int y) {
         this.grille = grille;
@@ -22,7 +23,9 @@ public class Personnage {
         seDeplace = false;
         sEstDeplace = false;
         aChangeDeDirection = false;
+        interagitBois = false;
         inventaire = new Inventaire();
+        boisInteraction = null;
     }
 
     public void seDeplacer() {
@@ -50,35 +53,28 @@ public class Personnage {
         }
     }
 
-    public Sommet interactionBois() {
+    public void interactionBois() {
         Bois bois;
         switch (direction) {
-            case haut:
-                bois = new Bois(x, y - 1);
-                break;
-            case bas:
-                bois = new Bois(x, y + 1);
-                break;
-            case gauche:
-                bois = new Bois(x - 1, y);
-                break;
-            case droite:
-                bois = new Bois(x + 1, y);
-                break;
-            default:
-                bois = null;
-                break;
+            case haut: bois = new Bois(x, y - 1); break;
+            case bas: bois = new Bois(x, y + 1); break;
+            case gauche: bois = new Bois(x - 1, y); break;
+            case droite: bois = new Bois(x + 1, y); break;
+            default: bois = null; break;
         }
         if (grille.getListeBois().contains(bois) && !inventaire.plein()) {
             inventaire.ajouterBois();
             grille.retirerBois(bois);
-            return new Sommet(bois.getX(), bois.getY());
+            boisInteraction =  new Sommet(bois.getX(), bois.getY());
+            interagitBois = true;
+            System.out.println("bois posé");
         } else if (!grille.getListeBois().contains(bois) && inventaire.possedeBois()) {
             inventaire.retirerBois();
             grille.placerBois(bois);
-            return bois;
+            boisInteraction = bois;
+            interagitBois = true;
+            System.out.println("bois retiré");
         }
-        return null;
     }
 
     //region Getter & Setter
@@ -130,5 +126,22 @@ public class Personnage {
     public Inventaire getInventaire() {
         return inventaire;
     }
+
+    public Sommet getBoisInteraction() {
+        return boisInteraction;
+    }
+
+    public void setBoisInteraction(Sommet boisInteraction) {
+        this.boisInteraction = boisInteraction;
+    }
+
+    public boolean isInteragitBois() {
+        return interagitBois;
+    }
+
+    public void setInteragitBois(boolean interagitBois) {
+        this.interagitBois = interagitBois;
+    }
+
     //endregion
 }

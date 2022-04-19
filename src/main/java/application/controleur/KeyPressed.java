@@ -20,9 +20,8 @@ public class KeyPressed implements EventHandler<KeyEvent> {
         switch (event.getCode()) {
             case Z:
                 grille.getPerso().setDirection(Dir.haut);
-                if (grille.getPerso().memeDirection()) {
+                if (grille.getPerso().memeDirection())
                     grille.getPerso().setSeDeplace(true);
-                }
                 else
                     grille.getPerso().setaChangeDeDirection(true);
                 break;
@@ -47,8 +46,7 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                 else
                     grille.getPerso().setaChangeDeDirection(true);
                 break;
-            case P: //poser bois
-                //controleur.affichageBois(grille.getPerso().interactionBois());
+            case P: grille.getPerso().setInteragitBois(true);
                 break;
             default: break;
         }

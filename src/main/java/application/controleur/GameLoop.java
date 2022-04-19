@@ -1,6 +1,7 @@
 package application.controleur;
 
 import application.modele.*;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,14 +38,15 @@ public class GameLoop implements Runnable {
 
     public void initialiser() {
         grille = new Grille(27, 15);
-        inventaire.textProperty().bind(grille.getPerso().getInventaire().getStockageTotalProperty().asString());
-        bois.textProperty().bind(grille.getPerso().getInventaire().getNbBoisProperty().asString());
+        //inventaire.textProperty().bind(grille.getPerso().getInventaire().getStockageTotalProperty().asString());
+        //bois.textProperty().bind(grille.getPerso().getInventaire().getNbBoisProperty().asString());
         animationSpritePerso = new AnimationSpritePerso(grille, spritesPerso);
         imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
         contruireMap(); construirePerso(); construireBois();
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(grille));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(grille));
     }
+
     public synchronized void star() {
         if (!running) {
             running = true;
@@ -97,8 +99,12 @@ public class GameLoop implements Runnable {
 
     private void tick() {
         //deplacement
-        if (!animationSpritePerso.isRunning()) {
+        if (!animationSpritePerso.isRunning())
             grille.getPerso().seDeplacer();
+        //bois
+        if (grille.getPerso().isInteragitBois()) {
+            grille.getPerso().interactionBois();
+            grille.getPerso().setInteragitBois(false);
         }
     }
 
@@ -106,6 +112,7 @@ public class GameLoop implements Runnable {
     private void render() {
         //animation deplacement
         affichagePerso();
+        affichageBois(grille.getPerso().getBoisInteraction());
     }
 
     private void contruireMap() {
@@ -143,17 +150,20 @@ public class GameLoop implements Runnable {
             img.setX(s.getX() * TUILE_TAILLE);
             img.setY(s.getY() * TUILE_TAILLE);
             tuilesObjet.getChildren().add(img);
-        } else if (s != null) { //retirer bois
+            grille.getPerso().setBoisInteraction(null);
+        } else if (grille.getPerso().getBoisInteraction() != null) { //retirer bois
             int i = 0;
             while (((ImageView) tuilesObjet.getChildren().get(i)).getX() != s.getX() * TUILE_TAILLE || ((ImageView) tuilesObjet.getChildren().get(i)).getY() != s.getY() * TUILE_TAILLE) i++;
             tuilesObjet.getChildren().remove(i);
+            grille.getPerso().setBoisInteraction(null);
         }
+        inventaire.setText(String.valueOf(grille.getPerso().getInventaire().getStockageTotal()));
+        bois.setText(String.valueOf(grille.getPerso().getInventaire().getNbBois()));
     }
 
     public void affichagePerso() {
         if (!animationSpritePerso.isRunning()) {
             if (grille.getPerso().issEstDeplace()) {
-                //System.out.println(grille.getPerso().getDirPrecedente() + "\t" + grille.getPerso().getDirection());
                 animationSpritePerso.start();
                 grille.getPerso().setsEstDeplace(false);
             } else if (grille.getPerso().isaChangeDeDirection()) {
@@ -161,5 +171,6 @@ public class GameLoop implements Runnable {
                 grille.getPerso().setaChangeDeDirection(false);
             }
         }
+
     }
 }
