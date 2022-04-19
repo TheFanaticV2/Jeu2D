@@ -15,9 +15,9 @@ public class Grille {
         this.height = height;
         listeAdj = new HashMap<>();
         listeBois = new ArrayList<>();
-        ajouterObstacles();
-        construire();
         perso = new Personnage(this,width/2, height/2);
+        ajouterBois();
+        construire();
     }
 
     private void construire() {
@@ -73,13 +73,13 @@ public class Grille {
         return listeBois;
     }
 
-    public boolean estUnObstacle(int x, int y) {
+    public boolean estUnBois(int x, int y) {
         int i = 0;
         while (i < listeBois.size() && (listeBois.get(i).getX() != x || listeBois.get(i).getY() != y)) i++;
         return i != listeBois.size();
     }
 
-    public void ajouterObstacles() {
+    public void ajouterBois() {
         listeBois.add(new Bois(width/2 - 2,height/2 - 2));
         listeBois.add(new Bois(width/2 - 1,height/2 - 2));
         listeBois.add(new Bois(width/2,height/2 - 2));
@@ -95,6 +95,18 @@ public class Grille {
         listeBois.add(new Bois(width/2 + 2,height/2 + 1));
         listeBois.add(new Bois(width/2 + 2,height/2));
         listeBois.add(new Bois(width/2 + 2,height/2 - 1));
+
+        int x, y;
+        int nbBois;
+        for (int i = 0; i < 20; i++) {
+            nbBois = listeBois.size();
+            while(listeBois.size() == nbBois) {
+                x = (int) (Math.random() * width);
+                y = (int) (Math.random() * height);
+                if (!estUnBois(x,y) && (x != perso.getX() || y != perso.getY()))
+                    listeBois.add(new Bois(x, y));
+            }
+        }
     }
 
     public void placerBois(Bois bois) {

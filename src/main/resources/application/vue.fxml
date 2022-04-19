@@ -18,62 +18,62 @@
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile040.png" />
+                        <Image url="@sprite/perso/haut_immobile.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile039.png" />
+                        <Image url="@sprite/perso/haut_mouvement1.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile041.png" />
+                        <Image url="@sprite/perso/haut__mouvement2.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile004.png" />
+                        <Image url="@sprite/perso/bas_immobile.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile003.png" />
+                        <Image url="@sprite/perso/bas_mouvement1.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile005.png" />
+                        <Image url="@sprite/perso/bas_mouvement2.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile016.png" />
+                        <Image url="@sprite/perso/gauche_immobile.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile017.png" />
+                        <Image url="@sprite/perso/gauche_mouvement2.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile015.png" />
+                        <Image url="@sprite/perso/gauche_mouvement1.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile028.png" />
+                        <Image url="@sprite/perso/droit_immobile.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile027.png" />
+                        <Image url="@sprite/perso/droit_mouvement1.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@sprite/perso/tile028.png" />
+                        <Image url="@sprite/perso/droit_immobile.png" />
                      </image>
                   </ImageView>
                </children>

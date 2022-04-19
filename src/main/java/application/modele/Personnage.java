@@ -1,8 +1,5 @@
 package application.modele;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 public class Personnage {
 
     private Grille grille;
@@ -20,7 +17,7 @@ public class Personnage {
     }
 
     public void seDeplacer(int dX, int dY) throws ObstacleException {
-        if (grille.estUnObstacle(x + dX, y + dY))
+        if (grille.estUnBois(x + dX, y + dY))
             throw new ObstacleException();
         else if (grille.dansGrille(x + dX, y + dY)) {
             x+=dX;
