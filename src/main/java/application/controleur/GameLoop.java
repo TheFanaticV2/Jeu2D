@@ -104,12 +104,8 @@ public class GameLoop implements Runnable {
 
 
     private void render() {
-        if (!animationSpritePerso.isRunning()) {
-            if (!grille.getPerso().isSeDeplace())
-                animationSpritePerso.immobile();
-            else
-                animationSpritePerso.start();
-        }
+        //animation deplacement
+        affichagePerso();
     }
 
     private void contruireMap() {
@@ -154,4 +150,16 @@ public class GameLoop implements Runnable {
         }
     }
 
+    public void affichagePerso() {
+        if (!animationSpritePerso.isRunning()) {
+            if (grille.getPerso().issEstDeplace()) {
+                //System.out.println(grille.getPerso().getDirPrecedente() + "\t" + grille.getPerso().getDirection());
+                animationSpritePerso.start();
+                grille.getPerso().setsEstDeplace(false);
+            } else if (grille.getPerso().isaChangeDeDirection()) {
+                animationSpritePerso.immobile();
+                grille.getPerso().setaChangeDeDirection(false);
+            }
+        }
+    }
 }

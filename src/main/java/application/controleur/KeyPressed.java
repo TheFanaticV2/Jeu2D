@@ -18,14 +18,39 @@ public class KeyPressed implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
-            case Z: grille.getPerso().setDirection(Dir.haut); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
-            case S: grille.getPerso().setDirection(Dir.bas); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
-            case Q: grille.getPerso().setDirection(Dir.gauche); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
-            case D: grille.getPerso().setDirection(Dir.droite); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
+            case Z:
+                grille.getPerso().setDirection(Dir.haut);
+                if (grille.getPerso().memeDirection()) {
+                    grille.getPerso().setSeDeplace(true);
+                }
+                else
+                    grille.getPerso().setaChangeDeDirection(true);
+                break;
+            case S:
+                grille.getPerso().setDirection(Dir.bas);
+                if (grille.getPerso().memeDirection())
+                    grille.getPerso().setSeDeplace(true);
+                else
+                    grille.getPerso().setaChangeDeDirection(true);
+                break;
+            case Q:
+                grille.getPerso().setDirection(Dir.gauche);
+                if (grille.getPerso().memeDirection())
+                    grille.getPerso().setSeDeplace(true);
+                else
+                    grille.getPerso().setaChangeDeDirection(true);
+                break;
+            case D:
+                grille.getPerso().setDirection(Dir.droite);
+                if (grille.getPerso().memeDirection())
+                    grille.getPerso().setSeDeplace(true);
+                else
+                    grille.getPerso().setaChangeDeDirection(true);
+                break;
             case P: //poser bois
                 //controleur.affichageBois(grille.getPerso().interactionBois());
                 break;
-                default: break;
-            }
+            default: break;
+        }
     }
 }
