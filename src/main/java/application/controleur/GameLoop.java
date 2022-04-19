@@ -17,7 +17,6 @@ public class GameLoop implements Runnable {
     private Grille grille;
     private AnimationSpritePerso animationSpritePerso;
     private Image imageBois;
-    private boolean seDeplace;
 
     private StackPane root;
     private Pane tuilesFond, tuilesObjet;
@@ -26,7 +25,7 @@ public class GameLoop implements Runnable {
     private Label inventaire;
 
     public GameLoop(StackPane root, Pane tuilesFond, Pane tuilesObjet, StackPane spritesPerso, Label bois, Label inventaire) {
-        running = false; seDeplace = false;
+        running = false;
         this.root = root;
         this.tuilesFond = tuilesFond;
         this.tuilesObjet = tuilesObjet;
@@ -43,8 +42,8 @@ public class GameLoop implements Runnable {
         animationSpritePerso = new AnimationSpritePerso(grille, spritesPerso);
         imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
         contruireMap(); construirePerso(); construireBois();
-        root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(grille, this));
-        root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(this));
+        root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(grille));
+        root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(grille));
     }
     public synchronized void star() {
         if (!running) {
@@ -99,26 +98,18 @@ public class GameLoop implements Runnable {
     private void tick() {
         //deplacement
         if (!animationSpritePerso.isRunning()) {
-            if (!grille.getPerso().memeDirection() || !seDeplace) {
-                animationSpritePerso.immobile();
-            } else {
-                try {
-                    switch (grille.getPerso().getDirection()) {
-                        case haut: grille.getPerso().seDeplacer(0, -1); break;
-                        case bas: grille.getPerso().seDeplacer(0, 1); break;
-                        case gauche: grille.getPerso().seDeplacer(-1, 0); break;
-                        case droite: grille.getPerso().seDeplacer(1, 0); break;
-                    }
-                    animationSpritePerso.start();
-                } catch (ObstacleException e) {
-                    seDeplace = false;
-                }
-            }
+            grille.getPerso().seDeplacer();
         }
     }
 
 
     private void render() {
+        if (!animationSpritePerso.isRunning()) {
+            if (!grille.getPerso().isSeDeplace())
+                animationSpritePerso.immobile();
+            else
+                animationSpritePerso.start();
+        }
     }
 
     private void contruireMap() {
@@ -163,7 +154,4 @@ public class GameLoop implements Runnable {
         }
     }
 
-    public void setSeDeplace(boolean seDeplace) {
-        this.seDeplace = seDeplace;
-    }
 }

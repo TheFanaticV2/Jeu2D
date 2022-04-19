@@ -1,18 +1,19 @@
 package application.controleur;
 
+import application.modele.Grille;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 public class KeyReleased implements EventHandler<KeyEvent> {
 
-    private GameLoop gameLoop;
+    private Grille grille;
 
-    public KeyReleased(GameLoop gameLoop) {
-        this.gameLoop = gameLoop;
+    public KeyReleased(Grille grille) {
+        this.grille = grille;
     }
 
     @Override
     public void handle(KeyEvent event) {
-        gameLoop.setSeDeplace(false);
+        grille.getPerso().setSeDeplace(false);
     }
 }

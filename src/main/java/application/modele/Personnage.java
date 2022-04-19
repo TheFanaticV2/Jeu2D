@@ -10,6 +10,7 @@ public class Personnage {
     private int y;
     private Dir direction;
     private Dir dirPrecedente;
+    private boolean seDeplace;
     private Inventaire inventaire;
 
     public Personnage(Grille grille, int x, int y) {
@@ -18,16 +19,35 @@ public class Personnage {
         this.y = y;
         direction = Dir.bas;
         dirPrecedente = Dir.bas;
+        seDeplace = false;
         inventaire = new Inventaire();
     }
 
-    public void seDeplacer(int dX, int dY) throws ObstacleException {
-        if (grille.estUnObstacle(x + dX, y + dY))
-            throw new ObstacleException();
-        else if (grille.dansGrille(x + dX, y + dY)) {
-            x+=dX;
-            y+=dY;
+    public void seDeplacer() {
+        int dX, dY;
+        if (memeDirection() && seDeplace) {
+                try {
+                    switch (direction) {
+                        case haut: dX = 0; dY = -1; break;
+                        case bas: dX = 0; dY = 1; break;
+                        case gauche: dX = -1; dY = 0; break;
+                        case droite: dX = 1; dY = 0; break;
+                        default: dX = 0; dY = 0; break;
+                    }
+
+                    if (grille.estUnObstacle(x + dX, y + dY))
+                        throw new ObstacleException();
+                    else if (!grille.dansGrille(x + dX, y + dY))
+                        throw new LimiteException();
+                    else {
+                        x+=dX;
+                        y+=dY;
+                    }
+                } catch (Exception e) {
+                    seDeplace = false;
+                }
         }
+
     }
 
 //    public void seDeplacerHaut() throws ObstacleException {
@@ -99,5 +119,13 @@ public class Personnage {
 
     public Inventaire getInventaire() {
         return inventaire;
+    }
+
+    public boolean isSeDeplace() {
+        return seDeplace;
+    }
+
+    public void setSeDeplace(boolean seDeplace) {
+        this.seDeplace = seDeplace;
     }
 }

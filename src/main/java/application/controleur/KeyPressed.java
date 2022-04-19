@@ -10,20 +10,18 @@ import javafx.scene.input.KeyEvent;
 public class KeyPressed implements EventHandler<KeyEvent> {
 
     private Grille grille;
-    private GameLoop gameLoop;
 
-    public KeyPressed(Grille grille, GameLoop gameLoop) {
+    public KeyPressed(Grille grille) {
         this.grille = grille;
-        this.gameLoop = gameLoop;
     }
 
     @Override
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
-            case Z: grille.getPerso().setDirection(Dir.haut); gameLoop.setSeDeplace(true); break;
-            case S: grille.getPerso().setDirection(Dir.bas); gameLoop.setSeDeplace(true); break;
-            case Q: grille.getPerso().setDirection(Dir.gauche); gameLoop.setSeDeplace(true); break;
-            case D: grille.getPerso().setDirection(Dir.droite); gameLoop.setSeDeplace(true); break;
+            case Z: grille.getPerso().setDirection(Dir.haut); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
+            case S: grille.getPerso().setDirection(Dir.bas); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
+            case Q: grille.getPerso().setDirection(Dir.gauche); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
+            case D: grille.getPerso().setDirection(Dir.droite); if (grille.getPerso().memeDirection()) grille.getPerso().setSeDeplace(true); break;
             case P: //poser bois
                 //controleur.affichageBois(grille.getPerso().interactionBois());
                 break;
