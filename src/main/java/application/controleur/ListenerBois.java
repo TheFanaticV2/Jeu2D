@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 
 import static application.controleur.Controleur.TUILE_TAILLE;
 
-public class ListenerBois implements ListChangeListener {
+public class ListenerBois implements ListChangeListener<Bois> {
 
     private Pane tuilesObjet;
     private Grille grille;
@@ -20,17 +20,14 @@ public class ListenerBois implements ListChangeListener {
     }
 
     @Override
-    public void onChanged(Change c) {
-        int i = 0;
+    public void onChanged(Change<? extends Bois> c) {
         while (c.next()) {
-            if (c.wasAdded()) {
-                ajouterBois(grille.getListeBois().get(c.getFrom() + i));
-                i++;
-            }
-            else if (c.wasRemoved())
-                retirerBois(grille.getListeBois().get(c.getFrom()));
+            for (Bois ajoute : c.getAddedSubList())
+                ajouterBois(ajoute);
+
+            for (Bois retire : c.getRemoved())
+                retirerBois(retire);
         }
-        System.out.println(i);
     }
 
     private void ajouterBois(Bois bois) {
@@ -44,8 +41,7 @@ public class ListenerBois implements ListChangeListener {
 
     private void retirerBois(Bois bois) {
         int i = 0;
-        while (((ImageView) tuilesObjet.getChildren().get(i)).getX() != bois.getX() * TUILE_TAILLE
-                || ((ImageView) tuilesObjet.getChildren().get(i)).getY() != bois.getY() * TUILE_TAILLE) i++;
+        while (((ImageView) tuilesObjet.getChildren().get(i)).getX() != bois.getX() * TUILE_TAILLE || ((ImageView) tuilesObjet.getChildren().get(i)).getY() != bois.getY() * TUILE_TAILLE) i++;
         tuilesObjet.getChildren().remove(i);
     }
 }

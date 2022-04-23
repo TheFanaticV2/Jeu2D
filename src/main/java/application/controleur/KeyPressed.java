@@ -29,7 +29,10 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                             grille.getPerso().seDeplacer(0,-1);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.haut);
+                    } else {
+                        grille.getPerso().setDirection(Dir.haut);
+                        animationSpritePerso.immobile();
+                    }
                     break;
                 case S:
                     if (grille.getPerso().getDirection() == Dir.bas) {
@@ -37,7 +40,10 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                             grille.getPerso().seDeplacer(0,1);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.bas);
+                    } else {
+                        grille.getPerso().setDirection(Dir.bas);
+                        animationSpritePerso.immobile();
+                    }
                     break;
                 case Q:
                     if (grille.getPerso().getDirection() == Dir.gauche) {
@@ -45,7 +51,10 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                             grille.getPerso().seDeplacer(-1,0);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.gauche);
+                    } else {
+                        grille.getPerso().setDirection(Dir.gauche);
+                        animationSpritePerso.immobile();
+                    }
                     break;
                 case D:
                     if (grille.getPerso().getDirection() == Dir.droite) {
@@ -53,7 +62,10 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                             grille.getPerso().seDeplacer(1,0);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
-                    } else grille.getPerso().setDirection(Dir.droite);
+                    } else {
+                        grille.getPerso().setDirection(Dir.droite);
+                        animationSpritePerso.immobile();
+                    }
                     break;
                 case P:
                     grille.getPerso().interactionBois();

@@ -10,17 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controleur.Controleur">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1296.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controleur.Controleur">
    <children>
-      <Pane fx:id="gameOver" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;">
-         <children>
-            <Label alignment="CENTER" text="GAME OVER" textFill="WHITE">
-               <font>
-                  <Font size="50.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
+      <Label alignment="CENTER" prefHeight="720.0" prefWidth="1296.0" style="-fx-background-color: black;" text="GAME OVER" textFill="WHITE">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
       <Pane fx:id="tuilesFond" prefHeight="200.0" prefWidth="200.0" />
       <Pane fx:id="tuilesPerso" prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -99,7 +95,7 @@
             </HBox>
             <HBox>
                <children>
-                  <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="55.0">
+                  <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="60.0">
                      <children>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -116,7 +112,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="55.0">
+                  <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="60.0">
                      <children>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

@@ -2,7 +2,6 @@ package application.controleur;
 
 
 import application.modele.*;
-import application.modele.Exception.PvMaxException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

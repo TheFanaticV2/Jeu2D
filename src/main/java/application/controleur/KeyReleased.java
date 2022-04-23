@@ -13,6 +13,6 @@ public class KeyReleased implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(KeyEvent event) {
-        animationSpritePerso.immobile();
+        //animationSpritePerso.immobile();
     }
 }
