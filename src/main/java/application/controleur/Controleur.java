@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -26,6 +27,7 @@ public class Controleur implements Initializable {
     @FXML private StackPane spritesPerso;
     @FXML private Label bois;
     @FXML private Label inventaire;
+    @FXML private HBox hBoxPv;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,6 +41,7 @@ public class Controleur implements Initializable {
         construireBois();
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, grille, animationSpritePerso));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
+        grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv));
     }
 
     private void contruireMap() {

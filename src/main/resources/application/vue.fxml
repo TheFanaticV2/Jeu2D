@@ -121,6 +121,11 @@
                   </HBox>
                </children>
             </HBox>
+            <HBox fx:id="hBoxPv" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
    </children>

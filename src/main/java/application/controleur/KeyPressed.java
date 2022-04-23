@@ -2,7 +2,7 @@ package application.controleur;
 
 import application.modele.Dir;
 import application.modele.Grille;
-import application.modele.ObstacleException;
+import application.modele.Exception.ObstacleException;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
