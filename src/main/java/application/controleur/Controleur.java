@@ -20,7 +20,6 @@ public class Controleur implements Initializable {
 
     private Grille grille;
     private AnimationSpritePerso animationSpritePerso;
-    private Image imageBois;
 
     @FXML private StackPane root;
     @FXML private Pane tuilesFond, tuilesObjet;
@@ -36,7 +35,6 @@ public class Controleur implements Initializable {
         inventaire.textProperty().bind(grille.getPerso().getInventaire().getStockageTotalProperty().asString());
         bois.textProperty().bind(grille.getPerso().getInventaire().getNbBoisProperty().asString());
         animationSpritePerso = new AnimationSpritePerso(grille, spritesPerso);
-        imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, grille, animationSpritePerso));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
         grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
