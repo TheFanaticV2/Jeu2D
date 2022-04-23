@@ -72,15 +72,11 @@ public class Personnage {
         if (grille.getListeBois().contains(bois) && !inventaire.plein()) {
             inventaire.ajouterBois();
             grille.retirerBois(bois);
-            decrementerPv();
             return new Sommet(bois.getX(), bois.getY());
         }
         else if (!grille.getListeBois().contains(bois) && inventaire.possedeBois()){
             inventaire.retirerBois();
             grille.placerBois(bois);
-            try {
-                incrementerPv();
-            } catch (PvMaxException e) {}
             return bois;
         }
         return null;

@@ -66,7 +66,6 @@ public class Controleur implements Initializable {
         spritesPerso.getChildren().get(3).setVisible(true);
         for (int i = 0; i < 5; i++)
             try {grille.getPerso().incrementerPv();} catch (PvMaxException e) {}
-        System.out.println(hBoxPv.getChildren().size());
     }
 
     private void construireBois() {
