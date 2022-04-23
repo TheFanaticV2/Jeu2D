@@ -56,7 +56,7 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                     } else grille.getPerso().setDirection(Dir.droite);
                     break;
                 case P:
-                    controleur.affichageBois(grille.getPerso().interactionBois());
+                    grille.getPerso().interactionBois();
                     break;
                 default:
                     break;

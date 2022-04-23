@@ -1,22 +1,23 @@
 package application.modele;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.*;
 
 public class Grille {
     private int width;
     private int height;
     private Map<Sommet, Set<Sommet>> listeAdj;
-    private ArrayList<Bois> listeBois;
-
+    private ObservableList<Bois> listeBois;
     private Personnage perso;
 
     public Grille(int width, int height) {
         this.width = width;
         this.height = height;
         listeAdj = new HashMap<>();
-        listeBois = new ArrayList<>();
+        listeBois = FXCollections.observableArrayList();
         perso = new Personnage(this,width/2, height/2);
-        ajouterBois();
         construire();
     }
 
@@ -69,7 +70,7 @@ public class Grille {
         return perso;
     }
 
-    public ArrayList<Bois> getListeBois() {
+    public ObservableList<Bois> getListeBois() {
         return listeBois;
     }
 

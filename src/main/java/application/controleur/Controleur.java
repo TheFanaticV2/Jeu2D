@@ -30,6 +30,7 @@ public class Controleur implements Initializable {
     @FXML private Label inventaire;
     @FXML private HBox hBoxPv;
     @FXML private Pane gameOver;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         grille = new Grille(27, 15);
@@ -39,8 +40,9 @@ public class Controleur implements Initializable {
         imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, grille, animationSpritePerso));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
-        contruireMap(); construirePerso(); construireBois(); construireCoeur();
         grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
+        grille.getListeBois().addListener(new ListenerBois(tuilesObjet, grille));
+        contruireMap(); construirePerso(); construireBois(); construireCoeur();
     }
 
     private void construireCoeur() {
@@ -76,23 +78,6 @@ public class Controleur implements Initializable {
     }
 
     private void construireBois() {
-        for (Bois bois : grille.getListeBois()) {
-            affichageBois(bois);
-        }
-    }
-
-    public void affichageBois(Sommet s) {
-        if (s instanceof Bois) { //poser bois
-            ImageView img = new ImageView(imageBois);
-            img.setFitWidth(TUILE_TAILLE);
-            img.setFitHeight(TUILE_TAILLE);
-            img.setX(s.getX() * TUILE_TAILLE);
-            img.setY(s.getY() * TUILE_TAILLE);
-            tuilesObjet.getChildren().add(img);
-        } else if (s != null) { //retirer bois
-            int i = 0;
-            while (((ImageView) tuilesObjet.getChildren().get(i)).getX() != s.getX() * TUILE_TAILLE || ((ImageView) tuilesObjet.getChildren().get(i)).getY() != s.getY() * TUILE_TAILLE) i++;
-            tuilesObjet.getChildren().remove(i);
-        }
+        grille.ajouterBois();
     }
 }
