@@ -21,7 +21,7 @@ public class Personnage {
         this.y = y;
         direction = Dir.bas;
         inventaire = new Inventaire();
-        pvProperty = new SimpleIntegerProperty(5);
+        pvProperty = new SimpleIntegerProperty(0);
     }
 
     public void seDeplacer(int dX, int dY) throws ObstacleException {
@@ -107,7 +107,7 @@ public class Personnage {
         if (pvMaxAtteint())
             throw new PvMaxException();
         else
-            pvProperty.setValue(pvProperty.getValue()-1);
+            pvProperty.setValue(pvProperty.getValue()+1);
     }
 
     public void decrementerPv() throws PvMinException {

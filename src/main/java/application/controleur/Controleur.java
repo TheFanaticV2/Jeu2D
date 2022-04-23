@@ -2,6 +2,8 @@ package application.controleur;
 
 
 import application.modele.*;
+import application.modele.Exception.PvMaxException;
+import application.modele.Exception.PvMinException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -36,12 +38,12 @@ public class Controleur implements Initializable {
         bois.textProperty().bind(grille.getPerso().getInventaire().getNbBoisProperty().asString());
         animationSpritePerso = new AnimationSpritePerso(grille, spritesPerso);
         imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
-        contruireMap();
-        construirePerso();
-        construireBois();
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, grille, animationSpritePerso));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
         grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv));
+        contruireMap();
+        construirePerso();
+        construireBois();
     }
 
     private void contruireMap() {
@@ -63,6 +65,9 @@ public class Controleur implements Initializable {
         for (int i = 0; i < spritesPerso.getChildren().size(); i++)
             spritesPerso.getChildren().get(i).setVisible(false);
         spritesPerso.getChildren().get(3).setVisible(true);
+        for (int i = 0; i < 5; i++)
+            try {grille.getPerso().incrementerPv();} catch (PvMaxException e) {}
+        System.out.println(hBoxPv.getChildren().size());
     }
 
     private void construireBois() {
