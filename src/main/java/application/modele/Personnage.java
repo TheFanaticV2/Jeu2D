@@ -20,7 +20,7 @@ public class Personnage {
         this.y = y;
         direction = Dir.bas;
         inventaire = new Inventaire();
-        pvProperty = new SimpleIntegerProperty(0);
+        pvProperty = new SimpleIntegerProperty(5);
     }
 
     public void seDeplacer(int dX, int dY) throws ObstacleException {
@@ -31,26 +31,6 @@ public class Personnage {
             y+=dY;
         }
     }
-
-//    public void seDeplacerHaut() throws ObstacleException {
-//        if (grille.estUnObstacle(x, y - 1)) throw new ObstacleException();
-//        else if(grille.dansGrille(x, y - 1)) y--;
-//    }
-//
-//    public void seDeplacerBas() throws ObstacleException {
-//        if (grille.estUnObstacle(x, y + 1)) throw new ObstacleException();
-//        else if(grille.dansGrille(x, y + 1)) y++;
-//    }
-//
-//    public void seDeplacerGauche() throws ObstacleException {
-//        if (grille.estUnObstacle(x - 1, y)) throw new ObstacleException();
-//        else if(grille.dansGrille(x - 1, y)) x--;
-//    }
-//
-//    public void seDeplacerDroite() throws ObstacleException {
-//        if (grille.estUnObstacle(x + 1, y)) throw new ObstacleException();
-//        else if(grille.dansGrille(x + 1, y)) x++;
-//    }
 
     public final int getX() {
         return x;

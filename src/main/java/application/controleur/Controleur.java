@@ -39,10 +39,19 @@ public class Controleur implements Initializable {
         imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, grille, animationSpritePerso));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
+        contruireMap(); construirePerso(); construireBois(); construireCoeur();
         grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
-        contruireMap();
-        construirePerso();
-        construireBois();
+    }
+
+    private void construireCoeur() {
+        ImageView coeur;
+        for (int i = 1; i < grille.getPerso().getPv() + 1; i++) {
+            coeur = new ImageView(new Image("file:src/main/resources/application/sprite/interface/coeur.png"));
+            coeur.setId(String.valueOf(i));
+            coeur.setFitWidth(30);
+            coeur.setFitHeight(30);
+            hBoxPv.getChildren().add(coeur);
+        }
     }
 
     private void contruireMap() {
@@ -64,8 +73,6 @@ public class Controleur implements Initializable {
         for (int i = 0; i < spritesPerso.getChildren().size(); i++)
             spritesPerso.getChildren().get(i).setVisible(false);
         spritesPerso.getChildren().get(3).setVisible(true);
-        for (int i = 0; i < 5; i++)
-            try {grille.getPerso().incrementerPv();} catch (PvMaxException e) {}
     }
 
     private void construireBois() {
