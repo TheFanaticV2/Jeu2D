@@ -3,7 +3,6 @@ package application.controleur;
 
 import application.modele.*;
 import application.modele.Exception.PvMaxException;
-import application.modele.Exception.PvMinException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -30,7 +29,7 @@ public class Controleur implements Initializable {
     @FXML private Label bois;
     @FXML private Label inventaire;
     @FXML private HBox hBoxPv;
-    
+    @FXML private Pane gameOver;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         grille = new Grille(27, 15);
@@ -40,7 +39,7 @@ public class Controleur implements Initializable {
         imageBois = new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png");
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, grille, animationSpritePerso));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
-        grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv));
+        grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         contruireMap();
         construirePerso();
         construireBois();

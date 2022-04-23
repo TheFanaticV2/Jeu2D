@@ -2,7 +2,6 @@ package application.modele;
 
 import application.modele.Exception.ObstacleException;
 import application.modele.Exception.PvMaxException;
-import application.modele.Exception.PvMinException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -73,11 +72,15 @@ public class Personnage {
         if (grille.getListeBois().contains(bois) && !inventaire.plein()) {
             inventaire.ajouterBois();
             grille.retirerBois(bois);
+            decrementerPv();
             return new Sommet(bois.getX(), bois.getY());
         }
         else if (!grille.getListeBois().contains(bois) && inventaire.possedeBois()){
             inventaire.retirerBois();
             grille.placerBois(bois);
+            try {
+                incrementerPv();
+            } catch (PvMaxException e) {}
             return bois;
         }
         return null;
@@ -110,12 +113,8 @@ public class Personnage {
             pvProperty.setValue(pvProperty.getValue()+1);
     }
 
-    public void decrementerPv() throws PvMinException {
-        if (pvMinAtteint())
-            throw new PvMinException();
-        else
-            pvProperty.setValue(pvProperty.getValue()-1);
-
+    public void decrementerPv() {
+        pvProperty.setValue(pvProperty.getValue()-1);
     }
 
     public boolean pvMaxAtteint() {

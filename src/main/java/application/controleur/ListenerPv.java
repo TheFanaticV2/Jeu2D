@@ -5,19 +5,23 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 public class ListenerPv implements ChangeListener {
 
     private HBox hBoxPv;
+    private Pane gameOver;
 
-    public ListenerPv(HBox hBoxPv) {
+    public ListenerPv(HBox hBoxPv, Pane gameOver) {
         this.hBoxPv = hBoxPv;
+        this.gameOver = gameOver;
     }
 
     @Override
     public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-        System.out.println(oldValue.getClass());
-        if (((Integer) oldValue).compareTo((Integer) newValue) < 0)
+        if ((Integer) newValue == 0)
+            gameOver.toFront();
+        else if (((Integer) oldValue).compareTo((Integer) newValue) < 0)
             ajouterCoeur(newValue);
         else
             retirerCoeur(oldValue);
