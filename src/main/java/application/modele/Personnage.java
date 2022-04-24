@@ -24,9 +24,9 @@ public class Personnage {
     }
 
     public void seDeplacer(int dX, int dY) throws ObstacleException {
-        if (grille.estUnBois(x + dX, y + dY))
+        if (!grille.dansGrille(x + dX, y + dY) || grille.estUnBois(x + dX, y + dY))
             throw new ObstacleException();
-        else if (grille.dansGrille(x + dX, y + dY)) {
+        else {
             x+=dX;
             y+=dY;
         }
