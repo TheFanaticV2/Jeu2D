@@ -30,6 +30,8 @@ public class Personnage {
             x+=dX;
             y+=dY;
         }
+        if (!grille.dansGrille(x,y))
+            grille.changementDeMap("/application/map/map2.txt");
     }
 
     public final int getX() {
@@ -38,6 +40,14 @@ public class Personnage {
 
     public final int getY() {
         return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public void interactionBois() {

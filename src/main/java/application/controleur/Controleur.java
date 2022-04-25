@@ -2,6 +2,8 @@ package application.controleur;
 
 
 import application.modele.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,7 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class Controleur implements Initializable {
@@ -28,7 +29,7 @@ public class Controleur implements Initializable {
     @FXML private Label bois;
     @FXML private Label inventaire;
     @FXML private HBox hBoxPv;
-    @FXML private Pane gameOver;
+    @FXML private Pane gameOver, paneTransition;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,12 +42,18 @@ public class Controleur implements Initializable {
         grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         grille.getListeBois().addListener(new ListenerBois(tuilesObjet, grille));
         construireGUI();
+        grille.changementDeMapPropertyProperty().addListener(new ListenerMap(this, grille, paneTransition));
     }
 
     private void construireGUI() {
         contruireMap();
         construirePerso();
         construireCoeur();
+        construireObjet();
+    }
+
+    public void construireObjet() {
+        tuilesObjet.getChildren().clear();
         construireBois();
         construireArbre();
     }
@@ -62,7 +69,8 @@ public class Controleur implements Initializable {
         }
     }
 
-    private void contruireMap() {
+    public void contruireMap() {
+        tuilesFond.getChildren().clear();
         ImageView img;
         for (Sommet s : grille.getListeAdj().keySet()) {
             switch (s.getGroundType()) {

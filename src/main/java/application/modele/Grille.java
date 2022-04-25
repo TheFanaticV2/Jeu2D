@@ -1,5 +1,7 @@
 package application.modele;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,19 +18,20 @@ public class Grille {
     private ObservableList<Bois> listeBois;
     private ArrayList<Arbre> listeArbre;
     private Personnage perso;
-
+    private BooleanProperty changementDeMapProperty;
     public Grille(int width, int height) {
+        changementDeMapProperty = new SimpleBooleanProperty(false);
         this.width = width;
         this.height = height;
+        perso = new Personnage(this,width/2, height/2 - 1);
+        construire("/application/map/map1.txt");
+    }
+
+    private void construire(String urlMap) {
         listeAdj = new HashMap<>();
         listeBois = FXCollections.observableArrayList();
         listeArbre = new ArrayList<>();
-        perso = new Personnage(this,width/2, height/2 - 1);
-        construire();
-    }
-
-    private void construire() {
-        InputStream is = getClass().getResourceAsStream("/application/map/map1.txt");
+        InputStream is = getClass().getResourceAsStream(urlMap);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         char c;
         for (int j = 0; j < height; j++) {
@@ -178,4 +181,28 @@ public class Grille {
         return height;
     }
 
+    public void changementDeMap(String urlMap) {
+        construire(urlMap);
+        if (perso.getX() >= width)
+            perso.setX(0);
+        else if (perso.getX() < 0)
+            perso.setX(width-1);
+        else if (perso.getY() >= height)
+            perso.setY(0);
+        else if (perso.getY() < 0)
+            perso.setY(height-1);
+        changementDeMapProperty.setValue(true);
+    }
+
+    public final boolean getChangementDeMapProperty() {
+        return changementDeMapProperty.get();
+    }
+
+    public final BooleanProperty changementDeMapPropertyProperty() {
+        return changementDeMapProperty;
+    }
+
+    public final void setChangementDeMapProperty(boolean changementDeMapProperty) {
+        this.changementDeMapProperty.set(changementDeMapProperty);
+    }
 }
