@@ -8,30 +8,28 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Personnage {
 
     private IntegerProperty pvProperty;
-    private Grille grille;
+    private Jeu jeu;
     private int x;
     private int y;
     private Dir direction;
     private Inventaire inventaire;
 
-    public Personnage(Grille grille, int x, int y) {
-        this.grille = grille;
-        this.x = x;
-        this.y = y;
+    public Personnage(Jeu jeu) {
+        this.jeu = jeu;
         direction = Dir.bas;
         inventaire = new Inventaire();
         pvProperty = new SimpleIntegerProperty(5);
     }
 
     public void seDeplacer(int dX, int dY) throws ObstacleException {
-        if (grille.estUnObstacle(x + dX, y + dY))
+        if (jeu.getGrilleActuelle().estUnObstacle(x + dX, y + dY))
             throw new ObstacleException();
         else {
             x+=dX;
             y+=dY;
         }
-        if (!grille.dansGrille(x,y))
-            grille.changementDeMap();
+        if (!jeu.getGrilleActuelle().dansGrille(x,y))
+            jeu.changementDeMap();
     }
 
     public final int getX() {
@@ -60,8 +58,8 @@ public class Personnage {
             default: bx = 0; by = 0; break;
         }
 
-        if (!grille.retirerBois(bx,by))
-            grille.placerBois(bx,by);
+        if (!jeu.getGrilleActuelle().retirerBois(bx,by))
+            jeu.getGrilleActuelle().placerBois(bx,by);
 
     }
 
@@ -103,4 +101,5 @@ public class Personnage {
     public boolean pvMinAtteint() {
         return pvProperty.getValue() == 0;
     }
+
 }

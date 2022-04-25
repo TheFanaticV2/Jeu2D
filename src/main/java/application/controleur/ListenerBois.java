@@ -30,8 +30,9 @@ public class ListenerBois implements ListChangeListener<Bois> {
         }
     }
 
-    private void ajouterBois(Bois bois) {
+    public void ajouterBois(Bois bois) {
         ImageView img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png"));
+        img.setId(bois.getId());
         img.setFitWidth(TUILE_TAILLE);
         img.setFitHeight(TUILE_TAILLE);
         img.setX(bois.getX() * TUILE_TAILLE);
@@ -40,8 +41,6 @@ public class ListenerBois implements ListChangeListener<Bois> {
     }
 
     private void retirerBois(Bois bois) {
-        int i = 0;
-        while (((ImageView) tuilesObjet.getChildren().get(i)).getX() != bois.getX() * TUILE_TAILLE || ((ImageView) tuilesObjet.getChildren().get(i)).getY() != bois.getY() * TUILE_TAILLE) i++;
-        tuilesObjet.getChildren().remove(i);
+        tuilesObjet.getChildren().remove(tuilesObjet.lookup("#" + bois.getId()));
     }
 }

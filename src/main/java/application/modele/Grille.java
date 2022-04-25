@@ -18,21 +18,34 @@ public class Grille {
     private ObservableList<Bois> listeBois;
     private ArrayList<Arbre> listeArbre;
     private Personnage perso;
-    private BooleanProperty changementDeMapProperty;
     private String urlMap;
-    public Grille(int width, int height) {
-        changementDeMapProperty = new SimpleBooleanProperty(false);
-        this.width = width;
-        this.height = height;
-        perso = new Personnage(this,width/2, height/2 - 1);
-        urlMap = "/application/map/map01.txt";
-        construire(urlMap);
-    }
 
-    private void construire(String urlMap) {
+    public Grille(Personnage perso,String urlMap) {
+        this.perso = perso;
+        this.width = 27;
+        this.height = 15;
+        this.urlMap = urlMap;
         listeAdj = new HashMap<>();
         listeBois = FXCollections.observableArrayList();
         listeArbre = new ArrayList<>();
+        construire();
+    }
+
+    private void construire() {
+        System.out.println(perso.getX() + "\t" + perso.getY());
+        if (perso.getX() >= width)
+            perso.setX(0);
+        else if (perso.getX() < 0)
+            perso.setX(width-1);
+        else if (perso.getY() >= height)
+            perso.setY(0);
+        else if (perso.getY() < 0)
+            perso.setY(height-1);
+        else {
+            perso.setX(width/2);
+            perso.setY(height/2 - 1);
+        }
+
         InputStream is = getClass().getResourceAsStream(urlMap);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         char c;
@@ -175,83 +188,7 @@ public class Grille {
         return null;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void changementDeMap() {
-        System.out.println(perso.getX() + "\t" + perso.getY());
-        rechercheMap();
-        construire(urlMap);
-        if (perso.getX() >= width)
-            perso.setX(0);
-        else if (perso.getX() < 0)
-            perso.setX(width-1);
-        else if (perso.getY() >= height)
-            perso.setY(0);
-        else if (perso.getY() < 0)
-            perso.setY(height-1);
-        changementDeMapProperty.setValue(true);
-    }
-
-    private void rechercheMap() {
-        InputStream is = getClass().getResourceAsStream("/application/map/mapInfo.txt");
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        StringBuffer sb = new StringBuffer();
-        sb.append(urlMap.charAt(20));
-        sb.append(urlMap.charAt(21));
-        int idMap = Integer.parseInt(sb.toString());
-        for (int i = 1; i < idMap; i++) {
-            try {
-                br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            String txt = br.readLine();
-            int cpt = 1;
-            int nbSorties = Integer.parseInt(String.valueOf(txt.charAt(0)));
-            boolean sortieTrouve = false;
-            for (int j = 0; j < nbSorties && !sortieTrouve; j++) {
-                sb.setLength(0);
-                sb.append(txt.charAt(cpt += 6));
-                sb.append(txt.charAt(++cpt));
-                int x = Integer.parseInt(sb.toString());
-                System.out.println(x);
-                sb.setLength(0);
-                sb.append(txt.charAt(cpt += 6));
-                sb.append(txt.charAt(++cpt));
-                int y = Integer.parseInt(sb.toString());
-                System.out.println(y);
-
-                if (perso.getX() == x && perso.getY() == y) {
-                    sb.setLength(0);
-                    for (int i = 1; i <= 26; i++)
-                        sb.append(txt.charAt(16 + i));
-                    urlMap = sb.toString();
-                    sortieTrouve = true;
-                }
-                cpt+=29;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public final boolean getChangementDeMapProperty() {
-        return changementDeMapProperty.get();
-    }
-
-    public final BooleanProperty changementDeMapPropertyProperty() {
-        return changementDeMapProperty;
-    }
-
-    public final void setChangementDeMapProperty(boolean changementDeMapProperty) {
-        this.changementDeMapProperty.set(changementDeMapProperty);
+    public String getUrlMap() {
+        return urlMap;
     }
 }
