@@ -40,24 +40,19 @@ public class Personnage {
         return y;
     }
 
-    public Objet interactionBois() {
-        Bois bois;
+    public void interactionBois() {
+        int bx, by;
         switch (direction) {
-            case haut : bois = new Bois(x, y - 1); break;
-            case bas : bois = new Bois(x, y + 1); break;
-            case gauche : bois = new Bois(x - 1, y); break;
-            case droite : bois = new Bois(x + 1, y); break;
-            default : bois = null; break;
+            case haut : bx = x; by = y-1; break;
+            case bas : bx = x; by = y+1; break;
+            case gauche : bx = x-1; by = y; break;
+            case droite : bx = x+1; by = y; break;
+            default: bx = 0; by = 0; break;
         }
-        if (grille.getListeBois().contains(bois) && !inventaire.plein()) {
-            inventaire.ajouterBois();
-            grille.retirerBois(bois);
-        }
-        else if (!grille.getListeBois().contains(bois) && inventaire.possedeBois()){
-            inventaire.retirerBois();
-            grille.placerBois(bois);
-        }
-        return null;
+
+        if (!grille.retirerBois(bx,by))
+            grille.placerBois(bx,by);
+
     }
 
     public Dir getDirection() {

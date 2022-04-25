@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class Controleur implements Initializable {
@@ -64,10 +65,12 @@ public class Controleur implements Initializable {
     private void contruireMap() {
         ImageView img;
         for (Sommet s : grille.getListeAdj().keySet()) {
-            if (s.getGroundType() == 0)
-                img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png"));
-            else
-                img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png"));
+            switch (s.getGroundType()) {
+                case 0: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png")); break;
+                case 1: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png")); break;
+                case 4: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/water.png")); break;
+                default: img = null; break;
+            }
             img.setFitWidth(TUILE_TAILLE);
             img.setFitHeight(TUILE_TAILLE);
             img.setX(s.getX() * TUILE_TAILLE);

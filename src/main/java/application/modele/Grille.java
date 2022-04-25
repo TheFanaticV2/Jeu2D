@@ -44,6 +44,8 @@ public class Grille {
                         case '3' :
                             listeBois.add(new Bois(i,j));
                             listeAdj.put(new Sommet(i, j,0), new HashSet<>()); break;
+                        case '4' :
+                            listeAdj.put(new Sommet(i, j, 4), new HashSet<>()); break;
                     }
 
                 } catch (IOException e) {
@@ -89,10 +91,10 @@ public class Grille {
     }
 
     public boolean estUnObstacle(int x, int y) {
-        if (!estUnBois(x,y))
-            return estUnArbre(x,y);
-        else
-            return true;
+        if (trouverBois(x,y) == -1)
+            if (!estUnArbre(x,y))
+                return estEau(x,y);
+        return true;
     }
 
     public boolean dansGrille(int x, int y) {
@@ -111,18 +113,33 @@ public class Grille {
         return listeBois;
     }
 
-    public boolean estUnBois(int x, int y) {
+    public int trouverBois(int x, int y) {
         int i = 0;
         while (i < listeBois.size() && (listeBois.get(i).getX() != x || listeBois.get(i).getY() != y)) i++;
-        return i != listeBois.size();
+        if (i < listeBois.size())
+            return i;
+        else
+            return -1;
     }
 
-    public void placerBois(Bois bois) {
-        listeBois.add(bois);
+    public void placerBois(int x, int y) {
+        if (perso.getInventaire().possedeBois() && !estUnObstacle(x,y)) {
+            listeBois.add(new Bois(x,y));
+            perso.getInventaire().retirerBois();
+        }
     }
 
-    public void retirerBois(Bois bois) {
-        listeBois.remove(bois);
+    public boolean retirerBois(int x, int y) {
+        if (!perso.getInventaire().plein()) {
+            int i = trouverBois(x,y);
+            if (i != -1) {
+                listeBois.remove(i);
+                perso.getInventaire().ajouterBois();
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public ArrayList<Arbre> getListeArbre() {
@@ -133,6 +150,16 @@ public class Grille {
         int i = 0;
         while (i < listeArbre.size() && (listeArbre.get(i).getX() != x || listeArbre.get(i).getY() != y)) i++;
         return i != listeArbre.size();
+    }
+
+    private boolean estEau(int x, int y) {
+        for (Sommet s : listeAdj.keySet())
+            if (s.getX() == x && s.getY() == y)
+                if (s.getGroundType() == 4)
+                    return true;
+                else
+                    return false;
+        return false;
     }
 
     public Set<Sommet> adjacents(Sommet s) {
