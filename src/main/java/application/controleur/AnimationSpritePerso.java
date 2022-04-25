@@ -1,6 +1,5 @@
 package application.controleur;
 
-import application.controleur.Controleur;
 import application.modele.Grille;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.StackPane;

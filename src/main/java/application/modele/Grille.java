@@ -19,12 +19,14 @@ public class Grille {
     private ArrayList<Arbre> listeArbre;
     private Personnage perso;
     private BooleanProperty changementDeMapProperty;
+    private String urlMap;
     public Grille(int width, int height) {
         changementDeMapProperty = new SimpleBooleanProperty(false);
         this.width = width;
         this.height = height;
         perso = new Personnage(this,width/2, height/2 - 1);
-        construire("/application/map/map1.txt");
+        urlMap = "/application/map/map01.txt";
+        construire(urlMap);
     }
 
     private void construire(String urlMap) {
@@ -181,7 +183,9 @@ public class Grille {
         return height;
     }
 
-    public void changementDeMap(String urlMap) {
+    public void changementDeMap() {
+        rechercheMap();
+        System.out.println(perso.getX() + "\t" + perso.getY());
         construire(urlMap);
         if (perso.getX() >= width)
             perso.setX(0);
@@ -192,6 +196,51 @@ public class Grille {
         else if (perso.getY() < 0)
             perso.setY(height-1);
         changementDeMapProperty.setValue(true);
+    }
+
+    private void rechercheMap() {
+        InputStream is = getClass().getResourceAsStream("/application/map/mapInfo.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuffer sb = new StringBuffer();
+        sb.append(urlMap.charAt(20));
+        sb.append(urlMap.charAt(21));
+        int idMap = Integer.parseInt(sb.toString());
+        for (int i = 1; i < idMap; i++) {
+            try {
+                br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            String txt = br.readLine();
+            int cpt = 1;
+            int nbSorties = Integer.parseInt(String.valueOf(txt.charAt(0)));
+            boolean sortieTrouve = false;
+            for (int j = 0; j < nbSorties && !sortieTrouve; j++) {
+                sb.setLength(0);
+                sb.append(txt.charAt(cpt += 6));
+                sb.append(txt.charAt(++cpt));
+                int x = Integer.parseInt(sb.toString());
+                System.out.println(x);
+                sb.setLength(0);
+                sb.append(txt.charAt(cpt += 6));
+                sb.append(txt.charAt(++cpt));
+                int y = Integer.parseInt(sb.toString());
+                System.out.println(y);
+
+                if (perso.getX() == x && perso.getY() == y) {
+                    sb.setLength(0);
+                    for (int i = 1; i <= 26; i++)
+                        sb.append(txt.charAt(16 + i));
+                    urlMap = sb.toString();
+                    sortieTrouve = true;
+                }
+                cpt+=29;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public final boolean getChangementDeMapProperty() {

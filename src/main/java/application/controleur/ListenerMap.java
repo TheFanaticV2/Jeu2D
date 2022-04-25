@@ -1,14 +1,8 @@
 package application.controleur;
 
 import application.modele.Grille;
-import javafx.animation.FadeTransition;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
 public class ListenerMap implements ChangeListener<Boolean> {
 

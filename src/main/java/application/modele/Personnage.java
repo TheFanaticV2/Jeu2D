@@ -31,7 +31,7 @@ public class Personnage {
             y+=dY;
         }
         if (!grille.dansGrille(x,y))
-            grille.changementDeMap("/application/map/map2.txt");
+            grille.changementDeMap();
     }
 
     public final int getX() {
