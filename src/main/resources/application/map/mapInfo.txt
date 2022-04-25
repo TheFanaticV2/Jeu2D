@@ -1,5 +1,5 @@
 2| x = 27 y = 10 /application/map/map02.txt | x = 27 y = 02 /application/map/map02.txt
-      5      5                          26
+2| x = -1 y = 10 /application/map/map01.txt | x = -1 y = 02 /application/map/map01.txt
 0 = herbe
 1 = sable
 2 = arbre

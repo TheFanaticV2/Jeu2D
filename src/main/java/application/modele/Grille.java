@@ -184,8 +184,8 @@ public class Grille {
     }
 
     public void changementDeMap() {
-        rechercheMap();
         System.out.println(perso.getX() + "\t" + perso.getY());
+        rechercheMap();
         construire(urlMap);
         if (perso.getX() >= width)
             perso.setX(0);
