@@ -34,8 +34,8 @@ public class Controleur implements Initializable {
         jeu = new Jeu();
         inventaire.textProperty().bind(jeu.getPerso().getInventaire().getStockageTotalProperty().asString());
         bois.textProperty().bind(jeu.getPerso().getInventaire().getNbBoisProperty().asString());
-        animationSpritePerso = new AnimationSpritePerso(jeu.getGrilleActuelle(), spritesPerso);
-        root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(this, jeu.getGrilleActuelle(), animationSpritePerso));
+        animationSpritePerso = new AnimationSpritePerso(jeu, spritesPerso);
+        root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(jeu, animationSpritePerso, this));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         listenerBois = new ListenerBois(tuilesObjet, jeu.getGrilleActuelle());

@@ -1,22 +1,22 @@
 package application.controleur;
 
 import application.modele.Dir;
-import application.modele.Grille;
 import application.modele.Exception.ObstacleException;
+import application.modele.Jeu;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 
 public class KeyPressed implements EventHandler<KeyEvent> {
 
-    private Grille grille;
+    private Jeu jeu;
     private AnimationSpritePerso animationSpritePerso;
     private Controleur controleur;
 
-    public KeyPressed(Controleur controleur, Grille grille, AnimationSpritePerso animationSpritePerso) {
-        this.controleur = controleur;
-        this.grille = grille;
+    public KeyPressed(Jeu jeu, AnimationSpritePerso animationSpritePerso, Controleur controleur) {
+        this.jeu = jeu;
         this.animationSpritePerso = animationSpritePerso;
+        this.controleur = controleur;
     }
 
     @Override
@@ -24,51 +24,51 @@ public class KeyPressed implements EventHandler<KeyEvent> {
         if (!animationSpritePerso.isRunning())
             switch (event.getCode()) {
                 case Z:
-                    if (grille.getPerso().getDirection() == Dir.haut) {
+                    if (jeu.getPerso().getDirection() == Dir.haut) {
                         try {
-                            grille.getPerso().seDeplacer(0,-1);
+                            jeu.getPerso().seDeplacer(0,-1);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
-                        grille.getPerso().setDirection(Dir.haut);
+                        jeu.getPerso().setDirection(Dir.haut);
                         animationSpritePerso.immobile();
                     }
                     break;
                 case S:
-                    if (grille.getPerso().getDirection() == Dir.bas) {
+                    if (jeu.getPerso().getDirection() == Dir.bas) {
                         try {
-                            grille.getPerso().seDeplacer(0,1);
+                            jeu.getPerso().seDeplacer(0,1);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
-                        grille.getPerso().setDirection(Dir.bas);
+                        jeu.getPerso().setDirection(Dir.bas);
                         animationSpritePerso.immobile();
                     }
                     break;
                 case Q:
-                    if (grille.getPerso().getDirection() == Dir.gauche) {
+                    if (jeu.getPerso().getDirection() == Dir.gauche) {
                         try {
-                            grille.getPerso().seDeplacer(-1,0);
+                            jeu.getPerso().seDeplacer(-1,0);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
-                        grille.getPerso().setDirection(Dir.gauche);
+                        jeu.getPerso().setDirection(Dir.gauche);
                         animationSpritePerso.immobile();
                     }
                     break;
                 case D:
-                    if (grille.getPerso().getDirection() == Dir.droite) {
+                    if (jeu.getPerso().getDirection() == Dir.droite) {
                         try {
-                            grille.getPerso().seDeplacer(1,0);
+                            jeu.getPerso().seDeplacer(1,0);
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
-                        grille.getPerso().setDirection(Dir.droite);
+                        jeu.getPerso().setDirection(Dir.droite);
                         animationSpritePerso.immobile();
                     }
                     break;
                 case P:
-                    grille.getPerso().interactionBois();
+                    jeu.getPerso().interactionBois();
                     break;
                 default:
                     break;

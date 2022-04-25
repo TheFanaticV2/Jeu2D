@@ -1,19 +1,19 @@
 package application.controleur;
 
-import application.modele.Grille;
+import application.modele.Jeu;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.StackPane;
 
 public class AnimationSpritePerso extends AnimationTimer {
-    private Grille grille;
+    private Jeu jeu;
     private StackPane spritesPerso;
     private long lastUpdate;
     private long latence;
     private double decalage;
     private boolean running;
 
-    public AnimationSpritePerso(Grille grille, StackPane SpritesPerso) {
-        this.grille = grille;
+    public AnimationSpritePerso(Jeu jeu, StackPane SpritesPerso) {
+        this.jeu = jeu;
         this.spritesPerso = SpritesPerso;
         this.lastUpdate = 0;
         this.latence = 75_000_000;
@@ -52,28 +52,28 @@ public class AnimationSpritePerso extends AnimationTimer {
         while (!spritesPerso.getChildren().get(i).isVisible()) i++;
         spritesPerso.getChildren().get(i).setVisible(false);
 
-        switch (grille.getPerso().getDirection()) {
+        switch (jeu.getPerso().getDirection()) {
             case haut:
-                spritesPerso.setTranslateX(grille.getPerso().getX() * (Controleur.TUILE_TAILLE));
-                spritesPerso.setTranslateY(grille.getPerso().getY() * (Controleur.TUILE_TAILLE) + decalage);
+                spritesPerso.setTranslateX(jeu.getPerso().getX() * (Controleur.TUILE_TAILLE));
+                spritesPerso.setTranslateY(jeu.getPerso().getY() * (Controleur.TUILE_TAILLE) + decalage);
                 if (i == 1) spritesPerso.getChildren().get(2).setVisible(true);
                 else spritesPerso.getChildren().get(1).setVisible(true);
                 break;
             case bas:
-                spritesPerso.setTranslateX(grille.getPerso().getX() * (Controleur.TUILE_TAILLE));
-                spritesPerso.setTranslateY(grille.getPerso().getY() * (Controleur.TUILE_TAILLE) - decalage);
+                spritesPerso.setTranslateX(jeu.getPerso().getX() * (Controleur.TUILE_TAILLE));
+                spritesPerso.setTranslateY(jeu.getPerso().getY() * (Controleur.TUILE_TAILLE) - decalage);
                 if (i == 4) spritesPerso.getChildren().get(5).setVisible(true);
                 else spritesPerso.getChildren().get(4).setVisible(true);
                 break;
             case gauche:
-                spritesPerso.setTranslateX(grille.getPerso().getX() * (Controleur.TUILE_TAILLE) + decalage);
-                spritesPerso.setTranslateY(grille.getPerso().getY() * (Controleur.TUILE_TAILLE));
+                spritesPerso.setTranslateX(jeu.getPerso().getX() * (Controleur.TUILE_TAILLE) + decalage);
+                spritesPerso.setTranslateY(jeu.getPerso().getY() * (Controleur.TUILE_TAILLE));
                 if (i == 7) spritesPerso.getChildren().get(8).setVisible(true);
                 else spritesPerso.getChildren().get(7).setVisible(true);
                 break;
             case droite:
-                spritesPerso.setTranslateX(grille.getPerso().getX() * (Controleur.TUILE_TAILLE) - decalage);
-                spritesPerso.setTranslateY(grille.getPerso().getY() * (Controleur.TUILE_TAILLE));
+                spritesPerso.setTranslateX(jeu.getPerso().getX() * (Controleur.TUILE_TAILLE) - decalage);
+                spritesPerso.setTranslateY(jeu.getPerso().getY() * (Controleur.TUILE_TAILLE));
                 if (i == 10) spritesPerso.getChildren().get(11).setVisible(true);
                 else spritesPerso.getChildren().get(10).setVisible(true);
                 break;
@@ -86,7 +86,7 @@ public class AnimationSpritePerso extends AnimationTimer {
         for (int i = 0; i  < spritesPerso.getChildren().size(); i++)
             spritesPerso.getChildren().get(i).setVisible(false);
 
-        switch (grille.getPerso().getDirection()) {
+        switch (jeu.getPerso().getDirection()) {
             case haut : spritesPerso.getChildren().get(0).setVisible(true); break;
             case bas : spritesPerso.getChildren().get(3).setVisible(true); break;
             case gauche : spritesPerso.getChildren().get(6).setVisible(true); break;

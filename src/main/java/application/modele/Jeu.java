@@ -18,7 +18,7 @@ public class Jeu {
     public Jeu() {
         this.grilles = new ArrayList<>();
         perso = new Personnage(this);
-        grilles.add(new Grille(perso, "/application/map/map01.txt"));
+        grilles.add(new Grille("/application/map/map01.txt"));
         grilleActuelle = grilles.get(0);
         changementDeMapProperty = new SimpleBooleanProperty(false);
     }
@@ -83,10 +83,10 @@ public class Jeu {
                     for (int i = 1; i <= 26; i++)
                         sb.append(txt.charAt(16 + i));
                     int i = 0;
-                    while (i < grilles.size() && grilles.get(i).getUrlMap() != sb.toString()) i++;
+                    while (i < grilles.size() && !grilles.get(i).getUrlMap().equals(sb.toString())) i++;
                     if (i == grilles.size())
-                        grilles.add(new Grille(perso, sb.toString()));
-                    grilleActuelle = grilles.get(grilles.size() -1);
+                        grilles.add(new Grille(sb.toString()));
+                    grilleActuelle = grilles.get(i);
                     setChangementDeMap(true);
                     sortieTrouve = true;
                 }

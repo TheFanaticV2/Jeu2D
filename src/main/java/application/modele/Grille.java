@@ -12,18 +12,14 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Grille {
-    private int width;
-    private int height;
+    public static int WIDTH = 27;
+    public static int HEIGHT = 15;
     private Map<Sommet, Set<Sommet>> listeAdj;
     private ObservableList<Bois> listeBois;
     private ArrayList<Arbre> listeArbre;
-    private Personnage perso;
     private String urlMap;
 
-    public Grille(Personnage perso,String urlMap) {
-        this.perso = perso;
-        this.width = 27;
-        this.height = 15;
+    public Grille(String urlMap) {
         this.urlMap = urlMap;
         listeAdj = new HashMap<>();
         listeBois = FXCollections.observableArrayList();
@@ -32,25 +28,11 @@ public class Grille {
     }
 
     private void construire() {
-        System.out.println(perso.getX() + "\t" + perso.getY());
-        if (perso.getX() >= width)
-            perso.setX(0);
-        else if (perso.getX() < 0)
-            perso.setX(width-1);
-        else if (perso.getY() >= height)
-            perso.setY(0);
-        else if (perso.getY() < 0)
-            perso.setY(height-1);
-        else {
-            perso.setX(width/2);
-            perso.setY(height/2 - 1);
-        }
-
         InputStream is = getClass().getResourceAsStream(urlMap);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         char c;
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
+        for (int j = 0; j < HEIGHT; j++) {
+            for (int i = 0; i < WIDTH; i++) {
                 try {
                     c = (char) br.read();
                     switch (c) {
@@ -77,8 +59,8 @@ public class Grille {
             }
         }
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < WIDTH; i++) {
+            for (int j = 0; j < HEIGHT; j++) {
                 Sommet s = getSommet(i, j);
                 if (dansGrille(i - 1, j))
                     listeAdj.get(s).add(getSommet(i - 1, j));
@@ -116,15 +98,11 @@ public class Grille {
     }
 
     public boolean dansGrille(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
+        return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
     }
 
     public Map<Sommet, Set<Sommet>> getListeAdj() {
         return listeAdj;
-    }
-
-    public Personnage getPerso() {
-        return perso;
     }
 
     public ObservableList<Bois> getListeBois() {
@@ -140,24 +118,21 @@ public class Grille {
             return -1;
     }
 
-    public void placerBois(int x, int y) {
-        if (perso.getInventaire().possedeBois() && !estUnObstacle(x,y)) {
+    public boolean placerBois(int x, int y) {
+        if (!estUnObstacle(x,y)) {
             listeBois.add(new Bois(x,y));
-            perso.getInventaire().retirerBois();
+            return true;
         }
+        return false;
     }
 
     public boolean retirerBois(int x, int y) {
-        if (!perso.getInventaire().plein()) {
-            int i = trouverBois(x,y);
-            if (i != -1) {
-                listeBois.remove(i);
-                perso.getInventaire().ajouterBois();
-                return true;
-            }
+        int i = trouverBois(x, y);
+        if (i != -1) {
+            listeBois.remove(i);
+            return true;
         }
         return false;
-
     }
 
     public ArrayList<Arbre> getListeArbre() {

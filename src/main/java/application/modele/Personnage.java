@@ -19,6 +19,8 @@ public class Personnage {
         direction = Dir.bas;
         inventaire = new Inventaire();
         pvProperty = new SimpleIntegerProperty(5);
+        x = Grille.WIDTH/2;
+        y = Grille.HEIGHT/2 - 1;
     }
 
     public void seDeplacer(int dX, int dY) throws ObstacleException {
@@ -28,8 +30,18 @@ public class Personnage {
             x+=dX;
             y+=dY;
         }
-        if (!jeu.getGrilleActuelle().dansGrille(x,y))
+        if (!jeu.getGrilleActuelle().dansGrille(x,y)) {
             jeu.changementDeMap();
+            System.out.println(x + "\t" + y);
+            if (x >= Grille.WIDTH)
+                x = 0;
+            else if (x < 0)
+                x = Grille.WIDTH - 1;
+            else if (y >= Grille.HEIGHT)
+                y = 0;
+            else if (y < 0)
+                y = Grille.HEIGHT - 1;
+        }
     }
 
     public final int getX() {
@@ -57,9 +69,9 @@ public class Personnage {
             case droite : bx = x+1; by = y; break;
             default: bx = 0; by = 0; break;
         }
+        if (!inventaire.plein() && jeu.getGrilleActuelle().retirerBois(bx,by)) inventaire.ajouterBois();
+        else if (inventaire.possedeBois() && jeu.getGrilleActuelle().placerBois(bx,by)) inventaire.retirerBois();
 
-        if (!jeu.getGrilleActuelle().retirerBois(bx,by))
-            jeu.getGrilleActuelle().placerBois(bx,by);
 
     }
 
