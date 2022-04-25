@@ -40,7 +40,7 @@ public class Personnage {
         return y;
     }
 
-    public Sommet interactionBois() {
+    public Objet interactionBois() {
         Bois bois;
         switch (direction) {
             case haut : bois = new Bois(x, y - 1); break;
@@ -52,12 +52,10 @@ public class Personnage {
         if (grille.getListeBois().contains(bois) && !inventaire.plein()) {
             inventaire.ajouterBois();
             grille.retirerBois(bois);
-            return new Sommet(bois.getX(), bois.getY());
         }
         else if (!grille.getListeBois().contains(bois) && inventaire.possedeBois()){
             inventaire.retirerBois();
             grille.placerBois(bois);
-            return bois;
         }
         return null;
     }

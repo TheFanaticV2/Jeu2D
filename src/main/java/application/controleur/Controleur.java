@@ -39,7 +39,14 @@ public class Controleur implements Initializable {
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
         grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         grille.getListeBois().addListener(new ListenerBois(tuilesObjet, grille));
-        contruireMap(); construirePerso(); construireBois(); construireCoeur();
+        construireGUI();
+    }
+
+    private void construireGUI() {
+        contruireMap();
+        construirePerso();
+        construireCoeur();
+        construireBois();
     }
 
     private void construireCoeur() {
@@ -55,15 +62,17 @@ public class Controleur implements Initializable {
 
     private void contruireMap() {
         ImageView img;
-        for (int i = 0; i < grille.getWidth(); i++)
-            for (int j = 0; j < grille.getHeight(); j++) {
+        for (Sommet s : grille.getListeAdj().keySet()) {
+            if (s.getGroundType() == 0)
                 img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png"));
-                img.setFitWidth(TUILE_TAILLE);
-                img.setFitHeight(TUILE_TAILLE);
-                img.setX(i * TUILE_TAILLE);
-                img.setY(j * TUILE_TAILLE);
-                tuilesFond.getChildren().add(img);
-            }
+            else
+                img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png"));
+            img.setFitWidth(TUILE_TAILLE);
+            img.setFitHeight(TUILE_TAILLE);
+            img.setX(s.getX() * TUILE_TAILLE);
+            img.setY(s.getY() * TUILE_TAILLE);
+            tuilesFond.getChildren().add(img);
+        }
     }
 
     private void construirePerso() {
@@ -75,6 +84,6 @@ public class Controleur implements Initializable {
     }
 
     private void construireBois() {
-        grille.ajouterBois();
+
     }
 }

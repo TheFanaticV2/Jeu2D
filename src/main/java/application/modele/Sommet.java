@@ -3,10 +3,12 @@ package application.modele;
 public class Sommet {
     private int x;
     private int y;
+    private int groundType;
 
-    public Sommet(int x, int y) {
+    public Sommet(int x, int y, int groundType) {
         this.x = x;
         this.y = y;
+        this.groundType = groundType;
     }
 
     public int getX() {
@@ -15,6 +17,10 @@ public class Sommet {
 
     public int getY() {
         return y;
+    }
+
+    public int getGroundType() {
+        return groundType;
     }
 
     @Override

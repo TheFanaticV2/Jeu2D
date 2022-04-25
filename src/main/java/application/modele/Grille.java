@@ -3,6 +3,10 @@ package application.modele;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Grille {
@@ -10,6 +14,7 @@ public class Grille {
     private int height;
     private Map<Sommet, Set<Sommet>> listeAdj;
     private ObservableList<Bois> listeBois;
+    private ArrayList<Arbre> listeArbre;
     private Personnage perso;
 
     public Grille(int width, int height) {
@@ -17,16 +22,41 @@ public class Grille {
         this.height = height;
         listeAdj = new HashMap<>();
         listeBois = FXCollections.observableArrayList();
+        listeArbre = new ArrayList<>();
         perso = new Personnage(this,width/2, height/2);
         construire();
     }
 
     private void construire() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                listeAdj.put(new Sommet(i, j), new HashSet<>());
+        InputStream is = getClass().getResourceAsStream("/application/map/map1.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        char c;
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                try {
+                    c = (char) br.read();
+                    switch (c) {
+                        case '0' : listeAdj.put(new Sommet(i, j, 0), new HashSet<>()); break;
+                        case '1' : listeAdj.put(new Sommet(i, j, 1), new HashSet<>()); break;
+                        case '2' :
+                            listeArbre.add(new Arbre(i,j));
+                            listeAdj.put(new Sommet(i, j,0), new HashSet<>()); break;
+                        case '3' :
+                            listeBois.add(new Bois(i,j));
+                            listeAdj.put(new Sommet(i, j,0), new HashSet<>()); break;
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                br.read(); br.read();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Sommet s = getSommet(i, j);
@@ -81,33 +111,7 @@ public class Grille {
     }
 
     public void ajouterBois() {
-        listeBois.add(new Bois(width/2 - 2,height/2 - 2));
-        listeBois.add(new Bois(width/2 - 1,height/2 - 2));
-        listeBois.add(new Bois(width/2,height/2 - 2));
-        listeBois.add(new Bois(width/2 + 1,height/2 - 2));
-        listeBois.add(new Bois(width/2 + 2,height/2 - 2));
-        listeBois.add(new Bois(width/2 - 2,height/2 - 1));
-        listeBois.add(new Bois(width/2 - 2,height/2));
-        listeBois.add(new Bois(width/2 - 2,height/2 + 1));
-        listeBois.add(new Bois(width/2 - 2,height/2 + 2));
-        listeBois.add(new Bois(width/2 - 1,height/2 + 2));
-        listeBois.add(new Bois(width/2 + 1,height/2 + 2));
-        listeBois.add(new Bois(width/2 + 2,height/2 + 2));
-        listeBois.add(new Bois(width/2 + 2,height/2 + 1));
-        listeBois.add(new Bois(width/2 + 2,height/2));
-        listeBois.add(new Bois(width/2 + 2,height/2 - 1));
 
-        int x, y;
-        int nbBois;
-        for (int i = 0; i < 20; i++) {
-            nbBois = listeBois.size();
-            while(listeBois.size() == nbBois) {
-                x = (int) (Math.random() * width);
-                y = (int) (Math.random() * height);
-                if (!estUnBois(x,y) && (x != perso.getX() || y != perso.getY()))
-                    listeBois.add(new Bois(x, y));
-            }
-        }
     }
 
     public void placerBois(Bois bois) {
