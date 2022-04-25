@@ -29,7 +29,7 @@ public class Controleur implements Initializable {
     @FXML private Label bois;
     @FXML private Label inventaire;
     @FXML private HBox hBoxPv;
-    @FXML private Pane gameOver, paneTransition;
+    @FXML private Pane gameOver;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,7 +42,7 @@ public class Controleur implements Initializable {
         grille.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         grille.getListeBois().addListener(new ListenerBois(tuilesObjet, grille));
         construireGUI();
-        grille.changementDeMapPropertyProperty().addListener(new ListenerMap(this, grille, paneTransition));
+        grille.changementDeMapPropertyProperty().addListener(new ListenerMap(this, grille));
     }
 
     private void construireGUI() {

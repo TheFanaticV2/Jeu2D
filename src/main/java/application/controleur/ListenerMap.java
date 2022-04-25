@@ -5,6 +5,8 @@ import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -12,12 +14,10 @@ public class ListenerMap implements ChangeListener<Boolean> {
 
     private Controleur controleur;
     private Grille grille;
-    private Pane pane;
 
-    public ListenerMap(Controleur controleur, Grille grille, Pane pane) {
+    public ListenerMap(Controleur controleur, Grille grille) {
         this.controleur = controleur;
         this.grille = grille;
-        this.pane = pane;
     }
 
     @Override

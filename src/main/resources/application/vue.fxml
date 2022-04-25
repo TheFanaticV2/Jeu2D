@@ -12,7 +12,6 @@
 
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1296.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controleur.Controleur">
    <children>
-      <Pane fx:id="paneTransition" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" />
       <Label alignment="CENTER" prefHeight="720.0" prefWidth="1296.0" style="-fx-background-color: black;" text="GAME OVER" textFill="WHITE">
          <font>
             <Font size="50.0" />
