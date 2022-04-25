@@ -47,6 +47,7 @@ public class Controleur implements Initializable {
         construirePerso();
         construireCoeur();
         construireBois();
+        construireArbre();
     }
 
     private void construireCoeur() {
@@ -84,6 +85,25 @@ public class Controleur implements Initializable {
     }
 
     private void construireBois() {
-
+        for (Bois bois : grille.getListeBois()) {
+            ImageView img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/cutted_tree.png"));
+            img.setFitWidth(TUILE_TAILLE);
+            img.setFitHeight(TUILE_TAILLE);
+            img.setX(bois.getX() * TUILE_TAILLE);
+            img.setY(bois.getY() * TUILE_TAILLE);
+            tuilesObjet.getChildren().add(img);
+        }
     }
+
+    private void construireArbre() {
+        for (Arbre arbre : grille.getListeArbre()) {
+            ImageView img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/tree.png"));
+            img.setFitWidth(TUILE_TAILLE);
+            img.setFitHeight(TUILE_TAILLE);
+            img.setX(arbre.getX() * TUILE_TAILLE);
+            img.setY(arbre.getY() * TUILE_TAILLE);
+            tuilesObjet.getChildren().add(img);
+        }
+    }
+
 }

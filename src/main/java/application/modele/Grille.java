@@ -23,7 +23,7 @@ public class Grille {
         listeAdj = new HashMap<>();
         listeBois = FXCollections.observableArrayList();
         listeArbre = new ArrayList<>();
-        perso = new Personnage(this,width/2, height/2);
+        perso = new Personnage(this,width/2, height/2 - 1);
         construire();
     }
 
@@ -88,6 +88,13 @@ public class Grille {
         return null;
     }
 
+    public boolean estUnObstacle(int x, int y) {
+        if (!estUnBois(x,y))
+            return estUnArbre(x,y);
+        else
+            return true;
+    }
+
     public boolean dansGrille(int x, int y) {
         return x >= 0 && x < width && y >= 0 && y < height;
     }
@@ -110,16 +117,22 @@ public class Grille {
         return i != listeBois.size();
     }
 
-    public void ajouterBois() {
-
-    }
-
     public void placerBois(Bois bois) {
         listeBois.add(bois);
     }
 
     public void retirerBois(Bois bois) {
         listeBois.remove(bois);
+    }
+
+    public ArrayList<Arbre> getListeArbre() {
+        return listeArbre;
+    }
+
+    private boolean estUnArbre(int x, int y) {
+        int i = 0;
+        while (i < listeArbre.size() && (listeArbre.get(i).getX() != x || listeArbre.get(i).getY() != y)) i++;
+        return i != listeArbre.size();
     }
 
     public Set<Sommet> adjacents(Sommet s) {
@@ -137,4 +150,5 @@ public class Grille {
     public int getHeight() {
         return height;
     }
+
 }
