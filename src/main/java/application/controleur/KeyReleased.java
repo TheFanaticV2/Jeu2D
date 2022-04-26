@@ -1,18 +1,20 @@
 package application.controleur;
 
+import application.modele.Grille;
+import application.modele.Personnage;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 public class KeyReleased implements EventHandler<KeyEvent> {
 
-    private AnimationSpritePerso animationSpritePerso;
+    private Personnage perso;
 
-    public KeyReleased(AnimationSpritePerso animationSpritePerso) {
-        this.animationSpritePerso = animationSpritePerso;
+    public KeyReleased(Personnage perso) {
+        this.perso = perso;
     }
 
     @Override
     public void handle(KeyEvent event) {
-        //animationSpritePerso.immobile();
+        perso.setSeDeplace(false);
     }
 }

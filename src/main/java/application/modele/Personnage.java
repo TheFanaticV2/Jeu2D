@@ -14,12 +14,12 @@ public class Personnage {
     private int x;
     private int y;
     private Dir direction, dirPrecedente;
-    private boolean seDeplace;
+    private boolean seDeplace, changeDirection, interagitBois;
     private Inventaire inventaire;
     private AnimationSpritePerso animationSpritePerso;
 
     public Personnage(Jeu jeu, StackPane spritesPerso) {
-        seDeplace = false;
+        seDeplace = false; changeDirection = false; interagitBois = false;
         this.jeu = jeu;
         direction = Dir.bas;
         dirPrecedente = direction;
@@ -32,11 +32,11 @@ public class Personnage {
 
     public void udpate() {
         seDeplacer();
+        interactionBois();
     }
 
     public void render() {
-        if (!animationSpritePerso.isRunning())
-            animationSpritePerso.start();
+        animationPerso();
     }
 
     private void seDeplacer() {
@@ -55,6 +55,7 @@ public class Personnage {
                     throw new ObstacleException();
                 else {
                     x += dX; y += dY;
+                    //if (!memeDirection()) aChangeDeDirection = true;
                 }
 
                 if (!jeu.getGrilleActuelle().dansGrille(x, y)) {
@@ -79,34 +80,51 @@ public class Personnage {
         return direction == dirPrecedente;
     }
 
-    public void interactionBois() {
-        int bx, by;
-        switch (direction) {
-            case haut:
-                bx = x;
-                by = y - 1;
-                break;
-            case bas:
-                bx = x;
-                by = y + 1;
-                break;
-            case gauche:
-                bx = x - 1;
-                by = y;
-                break;
-            case droite:
-                bx = x + 1;
-                by = y;
-                break;
-            default:
-                bx = 0;
-                by = 0;
-                break;
+    private void animationPerso() {
+        if (!animationSpritePerso.isRunning()) {
+            if (seDeplace) {
+                animationSpritePerso.start();
+                seDeplace = false;
+            } else if (changeDirection) {
+                animationSpritePerso.immobile();
+                changeDirection = false;
+            }
         }
-        if (!inventaire.plein() && jeu.getGrilleActuelle().retirerBois(bx, by)) inventaire.ajouterBois();
-        else if (inventaire.possedeBois() && jeu.getGrilleActuelle().placerBois(bx, by)) inventaire.retirerBois();
+    }
 
-
+    public void interactionBois() {
+        if (interagitBois) {
+            if (seDeplace)
+                interagitBois = false;
+            else {
+                int bx, by;
+                switch (direction) {
+                    case haut:
+                        bx = x;
+                        by = y - 1;
+                        break;
+                    case bas:
+                        bx = x;
+                        by = y + 1;
+                        break;
+                    case gauche:
+                        bx = x - 1;
+                        by = y;
+                        break;
+                    case droite:
+                        bx = x + 1;
+                        by = y;
+                        break;
+                    default:
+                        bx = 0;
+                        by = 0;
+                        break;
+                }
+                if (!inventaire.plein() && jeu.getGrilleActuelle().retirerBois(bx, by)) inventaire.ajouterBois();
+                else if (inventaire.possedeBois() && jeu.getGrilleActuelle().placerBois(bx, by))
+                    inventaire.retirerBois();
+            }
+        }
     }
 
     //region Getter & Setter
@@ -164,6 +182,19 @@ public class Personnage {
     public boolean pvMinAtteint() {
         return pvProperty.getValue() == 0;
     }
+
+    public void setSeDeplace(boolean seDeplace) {
+        this.seDeplace = seDeplace;
+    }
+
+    public void setChangeDirection(boolean changeDirection) {
+        this.changeDirection = changeDirection;
+    }
+
+    public void setInteragitBois(boolean interagitBois) {
+        this.interagitBois = interagitBois;
+    }
+
     //endregion
 }
 /*

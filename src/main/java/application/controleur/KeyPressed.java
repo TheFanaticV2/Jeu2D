@@ -1,7 +1,6 @@
 package application.controleur;
 
 import application.modele.Dir;
-import application.modele.jeu;
 import application.modele.Jeu;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -23,28 +22,28 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                 if (jeu.getPerso().memeDirection())
                     jeu.getPerso().setSeDeplace(true);
                 else
-                    jeu.getPerso().setaChangeDeDirection(true);
+                    jeu.getPerso().setChangeDirection(true);
                 break;
             case S:
                 jeu.getPerso().setDirection(Dir.bas);
                 if (jeu.getPerso().memeDirection())
                     jeu.getPerso().setSeDeplace(true);
                 else
-                    jeu.getPerso().setaChangeDeDirection(true);
+                    jeu.getPerso().setChangeDirection(true);
                 break;
             case Q:
                 jeu.getPerso().setDirection(Dir.gauche);
                 if (jeu.getPerso().memeDirection())
                     jeu.getPerso().setSeDeplace(true);
                 else
-                    jeu.getPerso().setaChangeDeDirection(true);
+                    jeu.getPerso().setChangeDirection(true);
                 break;
             case D:
                 jeu.getPerso().setDirection(Dir.droite);
                 if (jeu.getPerso().memeDirection())
                     jeu.getPerso().setSeDeplace(true);
                 else
-                    jeu.getPerso().setaChangeDeDirection(true);
+                    jeu.getPerso().setChangeDirection(true);
                 break;
             case P: jeu.getPerso().setInteragitBois(true);
                 break;

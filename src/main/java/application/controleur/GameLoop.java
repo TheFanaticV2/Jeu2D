@@ -50,7 +50,7 @@ public class GameLoop implements Runnable {
         inventaire.textProperty().bind(jeu.getPerso().getInventaire().getStockageTotalProperty().asString());
         bois.textProperty().bind(jeu.getPerso().getInventaire().getNbBoisProperty().asString());
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(jeu));
-        root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(animationSpritePerso));
+        root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(jeu.getPerso()));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         listenerBois = new ListenerBois(tuilesObjet, jeu.getGrilleActuelle());
         jeu.getGrilleActuelle().getListeBois().addListener(listenerBois);
@@ -111,18 +111,11 @@ public class GameLoop implements Runnable {
     }
 
     private void update() {
-        jeu.getPerso().update();
-        //bois
-        if (grille.getPerso().isInteragitBois()) {
-            grille.getPerso().interactionBois();
-            grille.getPerso().setInteragitBois(false);
-        }
+        jeu.getPerso().udpate();
     }
 
     private void render() {
-        //animation deplacement
-        affichagePerso();
-        affichageBois(grille.getPerso().getBoisInteraction());
+        jeu.getPerso().render();
     }
 
     private void construireGUI() {
