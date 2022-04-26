@@ -11,11 +11,9 @@ import static application.controleur.GameLoop.TUILE_TAILLE;
 public class ListenerBois implements ListChangeListener<Bois> {
 
     private Pane tuilesObjet;
-    private Grille grille;
 
-    public ListenerBois(Pane tuilesObjet, Grille grille) {
+    public ListenerBois(Pane tuilesObjet) {
         this.tuilesObjet = tuilesObjet;
-        this.grille = grille;
     }
 
     @Override

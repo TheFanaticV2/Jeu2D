@@ -98,6 +98,12 @@ public class AnimationSpritePerso extends AnimationTimer {
         }
     }
 
+    public void changementMap() {
+        immobile();
+        spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE));
+        spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE));
+    }
+
     public boolean isRunning() {
         return running;
     }

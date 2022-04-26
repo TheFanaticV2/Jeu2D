@@ -1,7 +1,6 @@
 package application.controleur;
 
 import application.modele.*;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,9 +8,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class GameLoop implements Runnable {
 
@@ -165,7 +161,7 @@ public class GameLoop implements Runnable {
     }
 
     private void construireBois() {
-        ListenerBois listenerBois = new ListenerBois(tuilesObjet, jeu.getGrilleActuelle());
+        ListenerBois listenerBois = new ListenerBois(tuilesObjet);
         jeu.getGrilleActuelle().getListeBois().addListener(listenerBois);
         for (Bois bois : jeu.getGrilleActuelle().getListeBois()) {
             listenerBois.ajouterBois(bois);
