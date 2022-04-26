@@ -21,8 +21,6 @@ public class GameLoop implements Runnable {
     private Thread gameThread;
 
     private Jeu jeu;
-    private ListenerBois listenerBois;
-
 
     private StackPane root;
     private Pane tuilesFond, tuilesObjet;
@@ -52,8 +50,6 @@ public class GameLoop implements Runnable {
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(jeu));
         root.addEventHandler(KeyEvent.KEY_RELEASED, new KeyReleased(jeu.getPerso()));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
-        listenerBois = new ListenerBois(tuilesObjet, jeu.getGrilleActuelle());
-        jeu.getGrilleActuelle().getListeBois().addListener(listenerBois);
         construireGUI();
         jeu.getChangementDeMapProperty().addListener(new ListenerMap(this, jeu));
     }
@@ -169,6 +165,8 @@ public class GameLoop implements Runnable {
     }
 
     private void construireBois() {
+        ListenerBois listenerBois = new ListenerBois(tuilesObjet, jeu.getGrilleActuelle());
+        jeu.getGrilleActuelle().getListeBois().addListener(listenerBois);
         for (Bois bois : jeu.getGrilleActuelle().getListeBois()) {
             listenerBois.ajouterBois(bois);
         }

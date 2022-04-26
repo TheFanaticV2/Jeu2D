@@ -32,21 +32,27 @@ public class Personnage {
     }
 
     public void udpate() {
-        seDeplacer();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                seDeplacer();
                 interactionBois();
             }
         });
     }
 
     public void render() {
-        animationPerso();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                animationPerso();
+            }
+        });
     }
 
     private void seDeplacer() {
         try {
+            //System.out.println(memeDirection() + "\t" + seDeplace + "\t" + !animationSpritePerso.isRunning());
             if (memeDirection() && seDeplace && !animationSpritePerso.isRunning()) {
                 int dX, dY;
                 switch (direction) {
