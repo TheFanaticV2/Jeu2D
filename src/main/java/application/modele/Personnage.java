@@ -3,6 +3,7 @@ package application.modele;
 import application.controleur.AnimationSpritePerso;
 import application.modele.Exception.ObstacleException;
 import application.modele.Exception.PvMaxException;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.layout.StackPane;
@@ -32,7 +33,12 @@ public class Personnage {
 
     public void udpate() {
         seDeplacer();
-        interactionBois();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                interactionBois();
+            }
+        });
     }
 
     public void render() {
@@ -55,7 +61,6 @@ public class Personnage {
                     throw new ObstacleException();
                 else {
                     x += dX; y += dY;
-                    //if (!memeDirection()) aChangeDeDirection = true;
                 }
 
                 if (!jeu.getGrilleActuelle().dansGrille(x, y)) {
@@ -82,9 +87,8 @@ public class Personnage {
 
     private void animationPerso() {
         if (!animationSpritePerso.isRunning()) {
-            if (seDeplace) {
+            if (seDeplace && memeDirection()) {
                 animationSpritePerso.start();
-                seDeplace = false;
             } else if (changeDirection) {
                 animationSpritePerso.immobile();
                 changeDirection = false;
@@ -94,9 +98,7 @@ public class Personnage {
 
     public void interactionBois() {
         if (interagitBois) {
-            if (seDeplace)
-                interagitBois = false;
-            else {
+            if (!seDeplace) {
                 int bx, by;
                 switch (direction) {
                     case haut:
@@ -124,6 +126,7 @@ public class Personnage {
                 else if (inventaire.possedeBois() && jeu.getGrilleActuelle().placerBois(bx, by))
                     inventaire.retirerBois();
             }
+            interagitBois = false;
         }
     }
 
@@ -149,7 +152,12 @@ public class Personnage {
     }
 
     public void setDirection(Dir direction) {
+        dirPrecedente = this.direction;
         this.direction = direction;
+    }
+
+    public Dir getDirPrecedente() {
+        return dirPrecedente;
     }
 
     public Inventaire getInventaire() {

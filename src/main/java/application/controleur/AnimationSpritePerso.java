@@ -55,7 +55,7 @@ public class AnimationSpritePerso extends AnimationTimer {
         while (!spritesPerso.getChildren().get(i).isVisible()) i++;
         spritesPerso.getChildren().get(i).setVisible(false);
 
-        switch (jeu.getPerso().getDirection()) {
+        switch (jeu.getPerso().getDirPrecedente()) {
             case haut:
                 spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE));
                 spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE) + decalage);
