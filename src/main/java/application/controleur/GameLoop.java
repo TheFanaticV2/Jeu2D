@@ -111,9 +111,7 @@ public class GameLoop implements Runnable {
     }
 
     private void update() {
-        //deplacement
-        if (!animationSpritePerso.isRunning())
-            grille.getPerso().seDeplacer();
+        jeu.getPerso().update();
         //bois
         if (grille.getPerso().isInteragitBois()) {
             grille.getPerso().interactionBois();
