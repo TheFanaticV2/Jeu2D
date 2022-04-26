@@ -6,19 +6,19 @@ import javafx.beans.value.ObservableValue;
 
 public class ListenerMap implements ChangeListener<Boolean> {
 
-    private Controleur controleur;
+    private GameLoop gameLoop;
     private Jeu jeu;
 
-    public ListenerMap(Controleur controleur, Jeu jeu) {
-        this.controleur = controleur;
+    public ListenerMap(GameLoop gameLoop, Jeu jeu) {
+        this.gameLoop = gameLoop;
         this.jeu = jeu;
     }
 
     @Override
     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
         if (newValue) {
-            controleur.contruireMap();
-            controleur.construireObjet();
+            gameLoop.contruireMap();
+            gameLoop.construireObjet();
             jeu.setChangementDeMap(false);
         }
     }

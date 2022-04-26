@@ -1,7 +1,7 @@
 package application.controleur;
 
 import application.modele.Dir;
-import application.modele.Exception.ObstacleException;
+import application.modele.jeu;
 import application.modele.Jeu;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -10,68 +10,45 @@ import javafx.scene.input.KeyEvent;
 public class KeyPressed implements EventHandler<KeyEvent> {
 
     private Jeu jeu;
-    private AnimationSpritePerso animationSpritePerso;
-    private Controleur controleur;
 
-    public KeyPressed(Jeu jeu, AnimationSpritePerso animationSpritePerso, Controleur controleur) {
+    public KeyPressed(Jeu jeu) {
         this.jeu = jeu;
-        this.animationSpritePerso = animationSpritePerso;
-        this.controleur = controleur;
     }
 
     @Override
     public void handle(KeyEvent event) {
-        if (!animationSpritePerso.isRunning())
-            switch (event.getCode()) {
-                case Z:
-                    if (jeu.getPerso().getDirection() == Dir.haut) {
-                        try {
-                            jeu.getPerso().seDeplacer(0,-1);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else {
-                        jeu.getPerso().setDirection(Dir.haut);
-                        animationSpritePerso.immobile();
-                    }
-                    break;
-                case S:
-                    if (jeu.getPerso().getDirection() == Dir.bas) {
-                        try {
-                            jeu.getPerso().seDeplacer(0,1);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else {
-                        jeu.getPerso().setDirection(Dir.bas);
-                        animationSpritePerso.immobile();
-                    }
-                    break;
-                case Q:
-                    if (jeu.getPerso().getDirection() == Dir.gauche) {
-                        try {
-                            jeu.getPerso().seDeplacer(-1,0);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else {
-                        jeu.getPerso().setDirection(Dir.gauche);
-                        animationSpritePerso.immobile();
-                    }
-                    break;
-                case D:
-                    if (jeu.getPerso().getDirection() == Dir.droite) {
-                        try {
-                            jeu.getPerso().seDeplacer(1,0);
-                            animationSpritePerso.start();
-                        } catch (ObstacleException e) {}
-                    } else {
-                        jeu.getPerso().setDirection(Dir.droite);
-                        animationSpritePerso.immobile();
-                    }
-                    break;
-                case P:
-                    jeu.getPerso().interactionBois();
-                    break;
-                default:
-                    break;
-            }
+        switch (event.getCode()) {
+            case Z:
+                jeu.getPerso().setDirection(Dir.haut);
+                if (jeu.getPerso().memeDirection())
+                    jeu.getPerso().setSeDeplace(true);
+                else
+                    jeu.getPerso().setaChangeDeDirection(true);
+                break;
+            case S:
+                jeu.getPerso().setDirection(Dir.bas);
+                if (jeu.getPerso().memeDirection())
+                    jeu.getPerso().setSeDeplace(true);
+                else
+                    jeu.getPerso().setaChangeDeDirection(true);
+                break;
+            case Q:
+                jeu.getPerso().setDirection(Dir.gauche);
+                if (jeu.getPerso().memeDirection())
+                    jeu.getPerso().setSeDeplace(true);
+                else
+                    jeu.getPerso().setaChangeDeDirection(true);
+                break;
+            case D:
+                jeu.getPerso().setDirection(Dir.droite);
+                if (jeu.getPerso().memeDirection())
+                    jeu.getPerso().setSeDeplace(true);
+                else
+                    jeu.getPerso().setaChangeDeDirection(true);
+                break;
+            case P: jeu.getPerso().setInteragitBois(true);
+                break;
+            default: break;
+        }
     }
 }

@@ -1,9 +1,11 @@
 package application.modele;
 
+import application.controleur.AnimationSpritePerso;
 import application.modele.Exception.ObstacleException;
 import application.modele.Exception.PvMaxException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.layout.StackPane;
 
 public class Personnage {
 
@@ -13,17 +15,20 @@ public class Personnage {
     private int y;
     private Dir direction;
     private Inventaire inventaire;
+    private AnimationSpritePerso animationSpritePerso;
 
-    public Personnage(Jeu jeu) {
+    public Personnage(Jeu jeu, StackPane spritesPerso) {
         this.jeu = jeu;
         direction = Dir.bas;
         inventaire = new Inventaire();
         pvProperty = new SimpleIntegerProperty(5);
         x = Grille.WIDTH/2;
         y = Grille.HEIGHT/2 - 1;
+        animationSpritePerso = new AnimationSpritePerso(jeu, spritesPerso);
     }
 
     public void seDeplacer(int dX, int dY) throws ObstacleException {
+
         if (jeu.getGrilleActuelle().estUnObstacle(x + dX, y + dY))
             throw new ObstacleException();
         else {
@@ -113,5 +118,10 @@ public class Personnage {
     public boolean pvMinAtteint() {
         return pvProperty.getValue() == 0;
     }
+
+    public void udpate() {
+        seDeplacer();
+    }
+
 
 }

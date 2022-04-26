@@ -2,6 +2,7 @@ package application.modele;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.layout.StackPane;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,9 +16,9 @@ public class Jeu {
     private Personnage perso;
     private BooleanProperty changementDeMapProperty;
 
-    public Jeu() {
+    public Jeu(StackPane spritesPerso) {
         this.grilles = new ArrayList<>();
-        perso = new Personnage(this);
+        perso = new Personnage(this, spritesPerso);
         grilles.add(new Grille("/application/map/map01.txt"));
         grilleActuelle = grilles.get(0);
         changementDeMapProperty = new SimpleBooleanProperty(false);
