@@ -23,7 +23,15 @@ public class Personnage {
         y = Grille.HEIGHT/2 - 1;
     }
 
-    public void seDeplacer(int dX, int dY) throws ObstacleException {
+    public void seDeplacer() throws ObstacleException {
+        int dX, dY;
+        switch (direction) {
+            case haut: dX = 0; dY = -1; break;
+            case bas: dX = 0; dY = 1; break;
+            case gauche: dX = -1; dY = 0; break;
+            case droite: dX = 1; dY = 0; break;
+            default: dX = 0; dY = 0; break;
+        }
         if (jeu.getGrilleActuelle().estUnObstacle(x + dX, y + dY))
             throw new ObstacleException();
         else {

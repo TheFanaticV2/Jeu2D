@@ -26,7 +26,7 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                 case Z:
                     if (jeu.getPerso().getDirection() == Dir.haut) {
                         try {
-                            jeu.getPerso().seDeplacer(0,-1);
+                            jeu.getPerso().seDeplacer();
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
@@ -37,7 +37,7 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                 case S:
                     if (jeu.getPerso().getDirection() == Dir.bas) {
                         try {
-                            jeu.getPerso().seDeplacer(0,1);
+                            jeu.getPerso().seDeplacer();
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
@@ -48,7 +48,7 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                 case Q:
                     if (jeu.getPerso().getDirection() == Dir.gauche) {
                         try {
-                            jeu.getPerso().seDeplacer(-1,0);
+                            jeu.getPerso().seDeplacer();
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
@@ -59,7 +59,7 @@ public class KeyPressed implements EventHandler<KeyEvent> {
                 case D:
                     if (jeu.getPerso().getDirection() == Dir.droite) {
                         try {
-                            jeu.getPerso().seDeplacer(1,0);
+                            jeu.getPerso().seDeplacer();
                             animationSpritePerso.start();
                         } catch (ObstacleException e) {}
                     } else {
