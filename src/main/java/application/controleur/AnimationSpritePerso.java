@@ -4,7 +4,7 @@ import application.modele.Jeu;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.StackPane;
 
-import static application.controleur.GameLoop.TUILE_TAILLE;
+import static application.controleur.Camera.TUILE_TAILLE;
 
 public class AnimationSpritePerso extends AnimationTimer {
 
