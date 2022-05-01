@@ -27,15 +27,13 @@ public class Camera {
 
     private Jeu jeu;
 
-    private StackPane root;
     private Pane tuilesFond, tuilesObjet;
     private HBox hBoxPv;
     private Pane gameOver;
 
 
-    public Camera(Jeu jeu, StackPane root, Pane tuilesFond, Pane tuilesObjet, HBox hBoxPv, Pane gameOver) {
+    public Camera(Jeu jeu, Pane tuilesFond, Pane tuilesObjet, HBox hBoxPv, Pane gameOver) {
         this.jeu = jeu;
-        this.root = root;
         this.tuilesFond = tuilesFond;
         this.tuilesObjet = tuilesObjet;
         this.hBoxPv = hBoxPv;
