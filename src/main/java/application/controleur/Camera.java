@@ -49,12 +49,13 @@ public class Camera {
                     setX(newValue.intValue() - WIDTH / 2);
                     contruireMap();
                     construireObjet();
-                } else {
-                    if (oldValue.intValue() - newValue.intValue() == -Grille.WIDTH) {
-                        setX(Grille.WIDTH - WIDTH / 2);
-                        contruireMap();
-                        construireObjet();
-                    }
+                } else if (Math.abs(oldValue.intValue() - newValue.intValue()) == Grille.WIDTH) {
+                    if (oldValue.intValue() - newValue.intValue() > 0)
+                        setX(0);
+                    else
+                        setX(Grille.WIDTH - WIDTH);
+                    contruireMap();
+                    construireObjet();
                 }
             }
         });
@@ -66,6 +67,13 @@ public class Camera {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if (newValue.intValue() >= HEIGHT / 2 && newValue.intValue() <= Grille.HEIGHT - HEIGHT / 2 - 1) {
                     setY(newValue.intValue() - HEIGHT / 2);
+                    contruireMap();
+                    construireObjet();
+                } else if (Math.abs(oldValue.intValue() - newValue.intValue()) == Grille.HEIGHT) {
+                    if (oldValue.intValue() - newValue.intValue() > 0)
+                        setY(0);
+                    else
+                        setY(Grille.HEIGHT - HEIGHT);
                     contruireMap();
                     construireObjet();
                 }

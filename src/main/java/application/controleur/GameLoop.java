@@ -70,7 +70,7 @@ public class GameLoop implements Runnable {
     @Override
     public void run() {
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 30;
+        final double amountOfTicks = 15;
         double nsBetweenTicks = 1_000_000_000 / amountOfTicks;
         double delta = 0;
         int updates = 0;
