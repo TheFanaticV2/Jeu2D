@@ -39,8 +39,9 @@ public class GameLoop implements Runnable {
     }
 
     public void initialiser() {
-        jeu = new Jeu(spritesPerso);
-        camera = new Camera(jeu, root, tuilesFond, tuilesObjet, spritesPerso, bois, inventaire, hBoxPv, gameOver);
+        jeu = new Jeu();
+        camera = new Camera(jeu, root, tuilesFond, tuilesObjet, hBoxPv, gameOver);
+        jeu.getPerso().setAnimationSpritePerso(new AnimationSpritePerso(jeu, spritesPerso, camera));
         inventaire.textProperty().bind(jeu.getPerso().getInventaire().getStockageTotalProperty().asString());
         bois.textProperty().bind(jeu.getPerso().getInventaire().getNbBoisProperty().asString());
         root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyPressed(jeu));

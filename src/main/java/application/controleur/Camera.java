@@ -24,26 +24,20 @@ public class Camera {
 
     private StackPane root;
     private Pane tuilesFond, tuilesObjet;
-    private StackPane spritesPerso;
-    private Label bois;
-    private Label inventaire;
     private HBox hBoxPv;
     private Pane gameOver;
 
 
-    public Camera(Jeu jeu, StackPane root, Pane tuilesFond, Pane tuilesObjet, StackPane spritesPerso, Label bois, Label inventaire, HBox hBoxPv, Pane gameOver) {
+    public Camera(Jeu jeu, StackPane root, Pane tuilesFond, Pane tuilesObjet, HBox hBoxPv, Pane gameOver) {
         this.jeu = jeu;
         this.root = root;
         this.tuilesFond = tuilesFond;
         this.tuilesObjet = tuilesObjet;
-        this.spritesPerso = spritesPerso;
-        this.bois = bois;
-        this.inventaire = inventaire;
         this.hBoxPv = hBoxPv;
         this.gameOver = gameOver;
-        x = this.jeu.getPerso().getX() - 5;
-        y = this.jeu.getPerso().getY() - 2;
-        width = 11; height = 5;
+        width = 11; height = 9;
+        x = this.jeu.getPerso().getX() - width/2;
+        y = this.jeu.getPerso().getY() - height/2;
         jeu.getChangementDeMapProperty().addListener(new ListenerMap(this, jeu));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         construireGUI();
@@ -51,7 +45,6 @@ public class Camera {
 
     private void construireGUI() {
         contruireMap();
-        construirePerso();
         construireCoeur();
         construireObjet();
     }
@@ -101,37 +94,40 @@ public class Camera {
                 }
                 img.setFitWidth(TUILE_TAILLE);
                 img.setFitHeight(TUILE_TAILLE);
-                img.setX(s.getX() * TUILE_TAILLE);
-                img.setY(s.getY() * TUILE_TAILLE);
+                img.setX((s.getX()-x) * TUILE_TAILLE);
+                img.setY((s.getY()-y) * TUILE_TAILLE);
                 tuilesFond.getChildren().add(img);
             }
         }
     }
 
-    private void construirePerso() {
-        spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE));
-        spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE));
-        for (int i = 0; i < spritesPerso.getChildren().size(); i++)
-            spritesPerso.getChildren().get(i).setVisible(false);
-        spritesPerso.getChildren().get(3).setVisible(true);
-    }
-
     private void construireBois() {
-        ListenerBois listenerBois = new ListenerBois(tuilesObjet);
+        ListenerBois listenerBois = new ListenerBois(tuilesObjet, x, y);
         jeu.getGrilleActuelle().getListeBois().addListener(listenerBois);
         for (Bois bois : jeu.getGrilleActuelle().getListeBois()) {
-            listenerBois.ajouterBois(bois);
+            if (bois.getX() >= x && bois.getX() < x+width && bois.getY() >= y && bois.getY() < y+height)
+                listenerBois.ajouterBois(bois);
         }
     }
 
     private void construireArbre() {
         for (Arbre arbre : jeu.getGrilleActuelle().getListeArbre()) {
-            ImageView img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/tree.png"));
-            img.setFitWidth(TUILE_TAILLE);
-            img.setFitHeight(TUILE_TAILLE);
-            img.setX(arbre.getX() * TUILE_TAILLE);
-            img.setY(arbre.getY() * TUILE_TAILLE);
-            tuilesObjet.getChildren().add(img);
+            if (arbre.getX() >= x && arbre.getX() < x+width && arbre.getY() >= y && arbre.getY() < y+height) {
+                ImageView img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/tree.png"));
+                img.setFitWidth(TUILE_TAILLE);
+                img.setFitHeight(TUILE_TAILLE);
+                img.setX((arbre.getX()-x) * TUILE_TAILLE);
+                img.setY((arbre.getY()-y) * TUILE_TAILLE);
+                tuilesObjet.getChildren().add(img);
+            }
         }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

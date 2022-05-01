@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             StackPane root = FXMLLoader.load(getClass().getResource("vue.fxml"));
-            Scene scene = new Scene(root, 11*48, 5*48);
+            Scene scene = new Scene(root);
             root.requestFocus();
             primaryStage.setTitle("Jeu2D");
             primaryStage.setResizable(false);

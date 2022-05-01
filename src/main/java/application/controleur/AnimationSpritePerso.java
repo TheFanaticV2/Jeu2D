@@ -10,14 +10,16 @@ public class AnimationSpritePerso extends AnimationTimer {
 
     private Jeu jeu;
     private StackPane spritesPerso;
+    private Camera camera;
     private long lastUpdate;
     private long latence;
     private double decalage;
     private boolean running;
 
-    public AnimationSpritePerso(Jeu jeu, StackPane SpritesPerso) {
+    public AnimationSpritePerso(Jeu jeu, StackPane SpritesPerso, Camera camera) {
         this.jeu = jeu;
         this.spritesPerso = SpritesPerso;
+        this.camera = camera;
         this.lastUpdate = 0;
         this.latence = 75_000_000;
         this.decalage = TUILE_TAILLE - TUILE_TAILLE/3;
@@ -57,26 +59,26 @@ public class AnimationSpritePerso extends AnimationTimer {
 
         switch (jeu.getPerso().getDirPrecedente()) {
             case haut:
-                spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE));
-                spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE) + decalage);
+                spritesPerso.setTranslateX((jeu.getPerso().getX() - camera.getX()) * (TUILE_TAILLE));
+                spritesPerso.setTranslateY((jeu.getPerso().getY() - camera.getY()) * (TUILE_TAILLE) + decalage);
                 if (i == 1) spritesPerso.getChildren().get(2).setVisible(true);
                 else spritesPerso.getChildren().get(1).setVisible(true);
                 break;
             case bas:
-                spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE));
-                spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE) - decalage);
+                spritesPerso.setTranslateX((jeu.getPerso().getX() - camera.getX()) * (TUILE_TAILLE));
+                spritesPerso.setTranslateY((jeu.getPerso().getY() - camera.getY()) * (TUILE_TAILLE) - decalage);
                 if (i == 4) spritesPerso.getChildren().get(5).setVisible(true);
                 else spritesPerso.getChildren().get(4).setVisible(true);
                 break;
             case gauche:
-                spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE) + decalage);
-                spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE));
+                spritesPerso.setTranslateX((jeu.getPerso().getX() - camera.getX()) * (TUILE_TAILLE) + decalage);
+                spritesPerso.setTranslateY((jeu.getPerso().getY() - camera.getY()) * (TUILE_TAILLE));
                 if (i == 7) spritesPerso.getChildren().get(8).setVisible(true);
                 else spritesPerso.getChildren().get(7).setVisible(true);
                 break;
             case droite:
-                spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE) - decalage);
-                spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE));
+                spritesPerso.setTranslateX((jeu.getPerso().getX() - camera.getX()) * (TUILE_TAILLE) - decalage);
+                spritesPerso.setTranslateY((jeu.getPerso().getY() - camera.getY()) * (TUILE_TAILLE));
                 if (i == 10) spritesPerso.getChildren().get(11).setVisible(true);
                 else spritesPerso.getChildren().get(10).setVisible(true);
                 break;
@@ -100,8 +102,8 @@ public class AnimationSpritePerso extends AnimationTimer {
 
     public void changementMap() {
         immobile();
-        spritesPerso.setTranslateX(jeu.getPerso().getX() * (TUILE_TAILLE));
-        spritesPerso.setTranslateY(jeu.getPerso().getY() * (TUILE_TAILLE));
+        spritesPerso.setTranslateX((jeu.getPerso().getX() - camera.getX()) * (TUILE_TAILLE));
+        spritesPerso.setTranslateY((jeu.getPerso().getY() - camera.getY()) * (TUILE_TAILLE));
     }
 
     public boolean isRunning() {

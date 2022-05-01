@@ -11,9 +11,13 @@ import static application.controleur.Camera.TUILE_TAILLE;
 public class ListenerBois implements ListChangeListener<Bois> {
 
     private Pane tuilesObjet;
+    private int x;
+    private int y;
 
-    public ListenerBois(Pane tuilesObjet) {
+    public ListenerBois(Pane tuilesObjet, int x, int y) {
         this.tuilesObjet = tuilesObjet;
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -32,8 +36,8 @@ public class ListenerBois implements ListChangeListener<Bois> {
         img.setId(bois.getId());
         img.setFitWidth(TUILE_TAILLE);
         img.setFitHeight(TUILE_TAILLE);
-        img.setX(bois.getX() * TUILE_TAILLE);
-        img.setY(bois.getY() * TUILE_TAILLE);
+        img.setX((bois.getX()-x) * TUILE_TAILLE);
+        img.setY((bois.getY()-y) * TUILE_TAILLE);
         tuilesObjet.getChildren().add(img);
     }
 

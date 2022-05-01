@@ -19,7 +19,7 @@ public class Personnage {
     private Inventaire inventaire;
     private AnimationSpritePerso animationSpritePerso;
 
-    public Personnage(Jeu jeu, StackPane spritesPerso) {
+    public Personnage(Jeu jeu) {
         seDeplace = false; changeDirection = false; interagitBois = false; changeMap = true;
         this.jeu = jeu;
         direction = Dir.bas;
@@ -28,7 +28,6 @@ public class Personnage {
         pvProperty = new SimpleIntegerProperty(5);
         x = Grille.WIDTH / 2;
         y = Grille.HEIGHT / 2 - 1;
-        animationSpritePerso = new AnimationSpritePerso(jeu, spritesPerso);
     }
 
     public void udpate() {
@@ -211,6 +210,7 @@ public class Personnage {
     public void setInteragitBois(boolean interagitBois) {
         this.interagitBois = interagitBois;
     }
+
 
     //endregion
 }

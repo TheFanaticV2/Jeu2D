@@ -16,9 +16,9 @@ public class Jeu {
     private Personnage perso;
     private BooleanProperty changementDeMapProperty;
 
-    public Jeu(StackPane spritesPerso) {
+    public Jeu() {
         this.grilles = new ArrayList<>();
-        perso = new Personnage(this, spritesPerso);
+        perso = new Personnage(this);
         grilles.add(new Grille("/application/map/map01.txt"));
         initGrilles();
         grilleActuelle = grilles.get(0);
