@@ -26,7 +26,7 @@ public class KeyPressed implements EventHandler<KeyEvent> {
             default: break;
         }
 
-        if (event.getCode() != KeyCode.P) {
+        if (event.getCode() == KeyCode.Z || event.getCode() == KeyCode.S || event.getCode() == KeyCode.Q || event.getCode() == KeyCode.D) {
             if (jeu.getPerso().memeDirection())
                 jeu.getPerso().setSeDeplace(true);
             else

@@ -32,6 +32,7 @@ public class Camera {
 
 
     public Camera(Jeu jeu, StackPane root, Pane tuilesFond, Pane tuilesObjet, StackPane spritesPerso, Label bois, Label inventaire, HBox hBoxPv, Pane gameOver) {
+        this.jeu = jeu;
         this.root = root;
         this.tuilesFond = tuilesFond;
         this.tuilesObjet = tuilesObjet;
@@ -40,6 +41,9 @@ public class Camera {
         this.inventaire = inventaire;
         this.hBoxPv = hBoxPv;
         this.gameOver = gameOver;
+        x = this.jeu.getPerso().getX() - 5;
+        y = this.jeu.getPerso().getY() - 2;
+        width = 11; height = 5;
         jeu.getChangementDeMapProperty().addListener(new ListenerMap(this, jeu));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         construireGUI();
