@@ -18,18 +18,19 @@ public class GameLoop implements Runnable {
     private Camera camera;
 
     private StackPane root;
-    private Pane tuilesFond, tuilesObjet;
+    private Pane tuilesFond, tuilesObjet, tuilesPerso;
     private StackPane spritesPerso;
     private Label bois;
     private Label inventaire;
     private HBox hBoxPv;
-    private Pane gameOver;
+    private Label gameOver;
 
 
-    public GameLoop(StackPane root, Pane tuilesFond, Pane tuilesObjet, StackPane spritesPerso, Label bois, Label inventaire, HBox hBoxPv, Pane gameOver) {
+    public GameLoop(StackPane root, Pane tuilesFond, Pane tuilesObjet, Pane tuilesPerso, StackPane spritesPerso, Label bois, Label inventaire, HBox hBoxPv, Label gameOver) {
         this.root = root;
         this.tuilesFond = tuilesFond;
         this.tuilesObjet = tuilesObjet;
+        this.tuilesPerso = tuilesPerso;
         this.spritesPerso = spritesPerso;
         this.bois = bois;
         this.inventaire = inventaire;
@@ -40,7 +41,7 @@ public class GameLoop implements Runnable {
 
     public void initialiser() {
         jeu = new Jeu();
-        camera = new Camera(jeu, tuilesFond, tuilesObjet, hBoxPv, gameOver);
+        camera = new Camera(jeu, root, tuilesFond, tuilesObjet, tuilesPerso, spritesPerso, bois, inventaire, hBoxPv, gameOver);
         jeu.getPerso().setAnimationSpritePerso(new AnimationSpritePerso(jeu, spritesPerso, camera));
         inventaire.textProperty().bind(jeu.getPerso().getInventaire().getStockageTotalProperty().asString());
         bois.textProperty().bind(jeu.getPerso().getInventaire().getNbBoisProperty().asString());

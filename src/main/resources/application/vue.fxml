@@ -12,12 +12,12 @@
 
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controleur.Controleur">
    <children>
-      <Label alignment="CENTER" prefHeight="432.0" prefWidth="528.0" style="-fx-background-color: black;" text="GAME OVER" textFill="WHITE">
+      <Label fx:id="gameOver" alignment="CENTER" style="-fx-background-color: black;" text="GAME OVER" textFill="WHITE">
          <font>
             <Font size="50.0" />
          </font>
       </Label>
-      <Pane fx:id="tuilesFond" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="tuilesFond" layoutX="100.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
       <Pane fx:id="tuilesPerso" prefHeight="200.0" prefWidth="200.0">
          <children>
             <StackPane fx:id="spritesPerso" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="48.0">

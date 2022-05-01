@@ -2,6 +2,7 @@ package application.controleur.listener;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -10,9 +11,9 @@ import javafx.scene.layout.Pane;
 public class ListenerPv implements ChangeListener<Number> {
 
     private HBox hBoxPv;
-    private Pane gameOver;
+    private Label gameOver;
 
-    public ListenerPv(HBox hBoxPv, Pane gameOver) {
+    public ListenerPv(HBox hBoxPv, Label gameOver) {
         this.hBoxPv = hBoxPv;
         this.gameOver = gameOver;
     }

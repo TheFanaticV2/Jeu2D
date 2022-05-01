@@ -22,16 +22,16 @@ public class Controleur implements Initializable {
 //    private ListenerBois listenerBois;
 
     @FXML private StackPane root;
-    @FXML private Pane tuilesFond, tuilesObjet;
+    @FXML private Pane tuilesFond, tuilesObjet, tuilesPerso;
     @FXML private StackPane spritesPerso;
     @FXML private Label bois;
     @FXML private Label inventaire;
     @FXML private HBox hBoxPv;
-    @FXML private Pane gameOver;
+    @FXML private Label gameOver;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        GameLoop gameLoop = new GameLoop(this.root, this.tuilesFond, this.tuilesObjet, this.spritesPerso, this.bois, this.inventaire, this.hBoxPv, this.gameOver);
+        GameLoop gameLoop = new GameLoop(root, tuilesFond, tuilesObjet, tuilesPerso, spritesPerso, bois, inventaire, hBoxPv, gameOver);
         gameLoop.star();
     }
 }

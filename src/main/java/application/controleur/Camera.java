@@ -9,6 +9,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -27,19 +29,33 @@ public class Camera {
 
     private Jeu jeu;
 
-    private Pane tuilesFond, tuilesObjet;
+    private StackPane root;
+    private Pane tuilesFond, tuilesObjet, tuilesPerso;
+    private StackPane spritesPerso;
+    private Label inventaire, bois;
     private HBox hBoxPv;
-    private Pane gameOver;
+    private Label gameOver;
 
-
-    public Camera(Jeu jeu, Pane tuilesFond, Pane tuilesObjet, HBox hBoxPv, Pane gameOver) {
+    public Camera(Jeu jeu, StackPane root, Pane tuilesFond, Pane tuilesObjet, Pane tuilesPerso, StackPane spritesPerso, Label bois, Label inventaire, HBox hBoxPv, Label gameOver) {
         this.jeu = jeu;
+        this.root = root;
         this.tuilesFond = tuilesFond;
+        this.tuilesFond.setMaxSize(WIDTH*TUILE_TAILLE, HEIGHT*TUILE_TAILLE);
         this.tuilesObjet = tuilesObjet;
+        this.tuilesObjet.setMaxSize(WIDTH*TUILE_TAILLE, HEIGHT*TUILE_TAILLE);
+        this.spritesPerso = spritesPerso;
+        this.tuilesPerso = tuilesPerso;
+        this.tuilesPerso.setMaxSize(WIDTH*TUILE_TAILLE, HEIGHT*TUILE_TAILLE);
+        this.bois = bois;
+        this.inventaire = inventaire;
         this.hBoxPv = hBoxPv;
         this.gameOver = gameOver;
+        this.gameOver.setMaxSize(WIDTH*TUILE_TAILLE, HEIGHT*TUILE_TAILLE);
+        initialiser();
+    }
+
+    private void initialiser() {
         xProperty = new SimpleIntegerProperty(this.jeu.getPerso().getX() - WIDTH / 2);
-        //xProperty.bind(this.jeu.getPerso().getXProperty().subtract(WIDTH/2));
         this.jeu.getPerso().getXProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -57,9 +73,7 @@ public class Camera {
                 }
             }
         });
-        //xProperty.addListener(new ListenerCamera(this, Grille.WIDTH));
         yProperty = new SimpleIntegerProperty(this.jeu.getPerso().getY() - HEIGHT / 2);
-        //yProperty.bind(this.jeu.getPerso().getYProperty().subtract(HEIGHT/2));
         this.jeu.getPerso().getYProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -77,16 +91,9 @@ public class Camera {
                 }
             }
         });
-        //yProperty.addListener(new ListenerCamera(this, Grille.HEIGHT));
         jeu.getChangementDeMapProperty().addListener(new ListenerMap(this, jeu));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
-        construireGUI();
-    }
-
-    private void construireGUI() {
-        contruireMap();
-        construireCoeur();
-        construireObjet();
+        contruireMap(); construireCoeur(); construireObjet();
     }
 
     public void construireObjet() {
