@@ -16,9 +16,7 @@ public class ListenerCamera implements ChangeListener<Number> {
 
     @Override
     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-        if (newValue.intValue() > 0 && newValue.intValue() < max) {
-            camera.contruireMap();
-            camera.construireObjet();
-        }
+        camera.contruireMap();
+        camera.construireObjet();
     }
 }

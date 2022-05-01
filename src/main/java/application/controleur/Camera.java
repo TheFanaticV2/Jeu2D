@@ -7,6 +7,8 @@ import application.controleur.listener.ListenerPv;
 import application.modele.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -17,8 +19,8 @@ public class Camera {
 
     public final static int TUILE_TAILLE = 48;
 
-    private final static int WIDTH = 11;
-    private final static int HEIGHT = 11;
+    public final static int WIDTH = 11;
+    public final static int HEIGHT = 9;
 
     private IntegerProperty xProperty;
     private IntegerProperty yProperty;
@@ -38,12 +40,38 @@ public class Camera {
         this.tuilesObjet = tuilesObjet;
         this.hBoxPv = hBoxPv;
         this.gameOver = gameOver;
-        xProperty = new SimpleIntegerProperty();
-        xProperty.bind(this.jeu.getPerso().getXProperty().subtract(WIDTH /2));
-        xProperty.addListener(new ListenerCamera(this, Grille.WIDTH));
-        yProperty = new SimpleIntegerProperty();
-        yProperty.bind(this.jeu.getPerso().getYProperty().subtract(HEIGHT /2));
-        yProperty.addListener(new ListenerCamera(this, Grille.HEIGHT));
+        xProperty = new SimpleIntegerProperty(this.jeu.getPerso().getX() - WIDTH / 2);
+        //xProperty.bind(this.jeu.getPerso().getXProperty().subtract(WIDTH/2));
+        this.jeu.getPerso().getXProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.intValue() >= WIDTH / 2 && newValue.intValue() <= Grille.WIDTH - WIDTH / 2 - 1) {
+                    setX(newValue.intValue() - WIDTH / 2);
+                    contruireMap();
+                    construireObjet();
+                } else {
+                    if (oldValue.intValue() - newValue.intValue() == -Grille.WIDTH) {
+                        setX(Grille.WIDTH - WIDTH / 2);
+                        contruireMap();
+                        construireObjet();
+                    }
+                }
+            }
+        });
+        //xProperty.addListener(new ListenerCamera(this, Grille.WIDTH));
+        yProperty = new SimpleIntegerProperty(this.jeu.getPerso().getY() - HEIGHT / 2);
+        //yProperty.bind(this.jeu.getPerso().getYProperty().subtract(HEIGHT/2));
+        this.jeu.getPerso().getYProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.intValue() >= HEIGHT / 2 && newValue.intValue() <= Grille.HEIGHT - HEIGHT / 2 - 1) {
+                    setY(newValue.intValue() - HEIGHT / 2);
+                    contruireMap();
+                    construireObjet();
+                }
+            }
+        });
+        //yProperty.addListener(new ListenerCamera(this, Grille.HEIGHT));
         jeu.getChangementDeMapProperty().addListener(new ListenerMap(this, jeu));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         construireGUI();
