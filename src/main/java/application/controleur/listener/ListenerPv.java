@@ -1,4 +1,4 @@
-package application.controleur;
+package application.controleur.listener;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-public class ListenerPv implements ChangeListener {
+public class ListenerPv implements ChangeListener<Number> {
 
     private HBox hBoxPv;
     private Pane gameOver;
@@ -18,7 +18,7 @@ public class ListenerPv implements ChangeListener {
     }
 
     @Override
-    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         if ((Integer) newValue == 0)
             gameOver.toFront();
         else if (((Integer) oldValue).compareTo((Integer) newValue) < 0)

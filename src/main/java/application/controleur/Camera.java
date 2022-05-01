@@ -1,10 +1,12 @@
 package application.controleur;
 
-import application.modele.Arbre;
-import application.modele.Bois;
-import application.modele.Jeu;
-import application.modele.Sommet;
-import javafx.scene.control.Label;
+import application.controleur.listener.ListenerBois;
+import application.controleur.listener.ListenerCamera;
+import application.controleur.listener.ListenerMap;
+import application.controleur.listener.ListenerPv;
+import application.modele.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -15,10 +17,11 @@ public class Camera {
 
     public final static int TUILE_TAILLE = 48;
 
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    private final static int WIDTH = 11;
+    private final static int HEIGHT = 11;
+
+    private IntegerProperty xProperty;
+    private IntegerProperty yProperty;
 
     private Jeu jeu;
 
@@ -35,9 +38,12 @@ public class Camera {
         this.tuilesObjet = tuilesObjet;
         this.hBoxPv = hBoxPv;
         this.gameOver = gameOver;
-        width = 11; height = 9;
-        x = this.jeu.getPerso().getX() - width/2;
-        y = this.jeu.getPerso().getY() - height/2;
+        xProperty = new SimpleIntegerProperty();
+        xProperty.bind(this.jeu.getPerso().getXProperty().subtract(WIDTH /2));
+        xProperty.addListener(new ListenerCamera(this, Grille.WIDTH));
+        yProperty = new SimpleIntegerProperty();
+        yProperty.bind(this.jeu.getPerso().getYProperty().subtract(HEIGHT /2));
+        yProperty.addListener(new ListenerCamera(this, Grille.HEIGHT));
         jeu.getChangementDeMapProperty().addListener(new ListenerMap(this, jeu));
         jeu.getPerso().getPvProperty().addListener(new ListenerPv(hBoxPv, gameOver));
         construireGUI();
@@ -67,25 +73,10 @@ public class Camera {
     }
 
     public void contruireMap() {
-//        tuilesFond.getChildren().clear();
-//        ImageView img;
-//        for (Sommet s : jeu.getGrilleActuelle().getListeAdj().keySet()) {
-//            switch (s.getGroundType()) {
-//                case 0: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png")); break;
-//                case 1: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png")); break;
-//                case 4: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/water.png")); break;
-//                default: img = null; break;
-//            }
-//            img.setFitWidth(TUILE_TAILLE);
-//            img.setFitHeight(TUILE_TAILLE);
-//            img.setX(s.getX() * TUILE_TAILLE);
-//            img.setY(s.getY() * TUILE_TAILLE);
-//            tuilesFond.getChildren().add(img);
-//        }
         tuilesFond.getChildren().clear();
         ImageView img;
         for (Sommet s : jeu.getGrilleActuelle().getListeAdj().keySet()) {
-            if (s.getX() >= x && s.getX() < x+width && s.getY() >= y && s.getY() < y+height) {
+            if (s.getX() >= xProperty.getValue() && s.getX() < xProperty.getValue() + WIDTH && s.getY() >= yProperty.getValue() && s.getY() < yProperty.getValue() + HEIGHT) {
                 switch (s.getGroundType()) {
                     case 0: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png")); break;
                     case 1: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png")); break;
@@ -94,40 +85,56 @@ public class Camera {
                 }
                 img.setFitWidth(TUILE_TAILLE);
                 img.setFitHeight(TUILE_TAILLE);
-                img.setX((s.getX()-x) * TUILE_TAILLE);
-                img.setY((s.getY()-y) * TUILE_TAILLE);
+                img.setX((s.getX()- xProperty.getValue()) * TUILE_TAILLE);
+                img.setY((s.getY()- yProperty.getValue()) * TUILE_TAILLE);
                 tuilesFond.getChildren().add(img);
             }
         }
     }
 
     private void construireBois() {
-        ListenerBois listenerBois = new ListenerBois(tuilesObjet, x, y);
+        ListenerBois listenerBois = new ListenerBois(tuilesObjet, this);
         jeu.getGrilleActuelle().getListeBois().addListener(listenerBois);
         for (Bois bois : jeu.getGrilleActuelle().getListeBois()) {
-            if (bois.getX() >= x && bois.getX() < x+width && bois.getY() >= y && bois.getY() < y+height)
+            if (bois.getX() >= xProperty.getValue() && bois.getX() < xProperty.getValue() + WIDTH && bois.getY() >= yProperty.getValue() && bois.getY() < yProperty.getValue() + HEIGHT)
                 listenerBois.ajouterBois(bois);
         }
     }
 
     private void construireArbre() {
         for (Arbre arbre : jeu.getGrilleActuelle().getListeArbre()) {
-            if (arbre.getX() >= x && arbre.getX() < x+width && arbre.getY() >= y && arbre.getY() < y+height) {
+            if (arbre.getX() >= xProperty.getValue() && arbre.getX() < xProperty.getValue() + WIDTH && arbre.getY() >= yProperty.getValue() && arbre.getY() < yProperty.getValue() + HEIGHT) {
                 ImageView img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/tree.png"));
                 img.setFitWidth(TUILE_TAILLE);
                 img.setFitHeight(TUILE_TAILLE);
-                img.setX((arbre.getX()-x) * TUILE_TAILLE);
-                img.setY((arbre.getY()-y) * TUILE_TAILLE);
+                img.setX((arbre.getX()- xProperty.getValue()) * TUILE_TAILLE);
+                img.setY((arbre.getY()- yProperty.getValue()) * TUILE_TAILLE);
                 tuilesObjet.getChildren().add(img);
             }
         }
     }
 
-    public int getX() {
-        return x;
+    public final int getX() {
+        return xProperty.getValue();
     }
 
-    public int getY() {
-        return y;
+    public final int getY() {
+        return yProperty.getValue();
+    }
+
+    public final void setX(int x) {
+        this.xProperty.setValue(x);
+    }
+
+    public final void setY(int y) {
+        this.yProperty.setValue(y);
+    }
+
+    public final IntegerProperty xProperty() {
+        return xProperty;
+    }
+
+    public final IntegerProperty yProperty() {
+        return yProperty;
     }
 }

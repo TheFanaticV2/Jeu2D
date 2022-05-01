@@ -1,5 +1,6 @@
-package application.controleur;
+package application.controleur.listener;
 
+import application.controleur.Camera;
 import application.modele.Bois;
 import application.modele.Grille;
 import javafx.collections.ListChangeListener;
@@ -11,13 +12,11 @@ import static application.controleur.Camera.TUILE_TAILLE;
 public class ListenerBois implements ListChangeListener<Bois> {
 
     private Pane tuilesObjet;
-    private int x;
-    private int y;
+    private Camera camera;
 
-    public ListenerBois(Pane tuilesObjet, int x, int y) {
+    public ListenerBois(Pane tuilesObjet, Camera camera) {
         this.tuilesObjet = tuilesObjet;
-        this.x = x;
-        this.y = y;
+        this.camera = camera;
     }
 
     @Override
@@ -36,8 +35,8 @@ public class ListenerBois implements ListChangeListener<Bois> {
         img.setId(bois.getId());
         img.setFitWidth(TUILE_TAILLE);
         img.setFitHeight(TUILE_TAILLE);
-        img.setX((bois.getX()-x) * TUILE_TAILLE);
-        img.setY((bois.getY()-y) * TUILE_TAILLE);
+        img.setX((bois.getX() - camera.getX()) * TUILE_TAILLE);
+        img.setY((bois.getY() - camera.getY()) * TUILE_TAILLE);
         tuilesObjet.getChildren().add(img);
     }
 

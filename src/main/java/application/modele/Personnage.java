@@ -6,14 +6,13 @@ import application.modele.Exception.PvMaxException;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.layout.StackPane;
 
 public class Personnage {
 
     private IntegerProperty pvProperty;
     private Jeu jeu;
-    private int x;
-    private int y;
+    private IntegerProperty xProperty;
+    private IntegerProperty yProperty;
     private Dir direction, dirPrecedente;
     private boolean seDeplace, changeDirection, interagitBois, changeMap;
     private Inventaire inventaire;
@@ -26,8 +25,8 @@ public class Personnage {
         dirPrecedente = direction;
         inventaire = new Inventaire();
         pvProperty = new SimpleIntegerProperty(5);
-        x = Grille.WIDTH / 2;
-        y = Grille.HEIGHT / 2 - 1;
+        xProperty = new SimpleIntegerProperty(Grille.WIDTH / 2);
+        yProperty = new SimpleIntegerProperty(Grille.HEIGHT / 2 - 1);
     }
 
     public void udpate() {
@@ -61,23 +60,23 @@ public class Personnage {
                     default: dX = 0; dY = 0; break;
                 }
 
-                if (jeu.getGrilleActuelle().estUnObstacle(x + dX, y + dY))
+                if (jeu.getGrilleActuelle().estUnObstacle(xProperty.getValue() + dX, yProperty.getValue() + dY))
                     throw new ObstacleException();
                 else {
-                    x += dX; y += dY;
+                    xProperty.setValue(xProperty.getValue() + dX); yProperty.setValue(yProperty.getValue() + dY);
                 }
 
-                if (!jeu.getGrilleActuelle().dansGrille(x, y)) {
+                if (!jeu.getGrilleActuelle().dansGrille(xProperty.getValue(), yProperty.getValue())) {
                     jeu.changementDeMap();
-                    System.out.println(x + "\t" + y);
-                    if (x >= Grille.WIDTH)
-                        x = 0;
-                    else if (x < 0)
-                        x = Grille.WIDTH - 1;
-                    else if (y >= Grille.HEIGHT)
-                        y = 0;
-                    else if (y < 0)
-                        y = Grille.HEIGHT - 1;
+                    System.out.println(xProperty + "\t" + yProperty);
+                    if (xProperty.getValue() >= Grille.WIDTH)
+                        xProperty.setValue(0);
+                    else if (xProperty.getValue() < 0)
+                        xProperty.setValue(Grille.WIDTH - 1);
+                    else if (yProperty.getValue() >= Grille.HEIGHT)
+                        yProperty.setValue(0);
+                    else if (yProperty.getValue() < 0)
+                        yProperty.setValue(Grille.HEIGHT - 1);
                     changeMap = true;
                 }
             }
@@ -109,26 +108,11 @@ public class Personnage {
             if (!seDeplace) {
                 int bx, by;
                 switch (direction) {
-                    case haut:
-                        bx = x;
-                        by = y - 1;
-                        break;
-                    case bas:
-                        bx = x;
-                        by = y + 1;
-                        break;
-                    case gauche:
-                        bx = x - 1;
-                        by = y;
-                        break;
-                    case droite:
-                        bx = x + 1;
-                        by = y;
-                        break;
-                    default:
-                        bx = 0;
-                        by = 0;
-                        break;
+                    case haut: bx = xProperty.getValue(); by = yProperty.getValue() - 1; break;
+                    case bas: bx = xProperty.getValue(); by = yProperty.getValue() + 1; break;
+                    case gauche: bx = xProperty.getValue() - 1; by = yProperty.getValue(); break;
+                    case droite: bx = xProperty.getValue() + 1; by = yProperty.getValue(); break;
+                    default: bx = 0; by = 0; break;
                 }
                 if (!inventaire.plein() && jeu.getGrilleActuelle().retirerBois(bx, by)) inventaire.ajouterBois();
                 else if (inventaire.possedeBois() && jeu.getGrilleActuelle().placerBois(bx, by))
@@ -140,19 +124,27 @@ public class Personnage {
 
     //region Getter & Setter
     public final int getX() {
-        return x;
+        return xProperty.getValue();
     }
 
     public final int getY() {
-        return y;
+        return yProperty.getValue();
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public final void setX(int x) {
+        this.xProperty.setValue(x);
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public final void setY(int y) {
+        this.yProperty.setValue(y);
+    }
+
+    public final IntegerProperty getXProperty() {
+        return xProperty;
+    }
+
+    public final IntegerProperty getYProperty() {
+        return yProperty;
     }
 
     public Dir getDirection() {
@@ -211,6 +203,9 @@ public class Personnage {
         this.interagitBois = interagitBois;
     }
 
+    public void setAnimationSpritePerso(AnimationSpritePerso animationSpritePerso) {
+        this.animationSpritePerso = animationSpritePerso;
+    }
 
     //endregion
 }

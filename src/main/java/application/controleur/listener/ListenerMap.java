@@ -1,5 +1,6 @@
-package application.controleur;
+package application.controleur.listener;
 
+import application.controleur.Camera;
 import application.modele.Jeu;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
