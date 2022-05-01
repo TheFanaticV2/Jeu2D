@@ -74,20 +74,37 @@ public class Camera {
     }
 
     public void contruireMap() {
+//        tuilesFond.getChildren().clear();
+//        ImageView img;
+//        for (Sommet s : jeu.getGrilleActuelle().getListeAdj().keySet()) {
+//            switch (s.getGroundType()) {
+//                case 0: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png")); break;
+//                case 1: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png")); break;
+//                case 4: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/water.png")); break;
+//                default: img = null; break;
+//            }
+//            img.setFitWidth(TUILE_TAILLE);
+//            img.setFitHeight(TUILE_TAILLE);
+//            img.setX(s.getX() * TUILE_TAILLE);
+//            img.setY(s.getY() * TUILE_TAILLE);
+//            tuilesFond.getChildren().add(img);
+//        }
         tuilesFond.getChildren().clear();
         ImageView img;
         for (Sommet s : jeu.getGrilleActuelle().getListeAdj().keySet()) {
-            switch (s.getGroundType()) {
-                case 0: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png")); break;
-                case 1: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png")); break;
-                case 4: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/water.png")); break;
-                default: img = null; break;
+            if (s.getX() >= x && s.getX() < x+width && s.getY() >= y && s.getY() < y+height) {
+                switch (s.getGroundType()) {
+                    case 0: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/LGrass5.png")); break;
+                    case 1: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/Sand1.png")); break;
+                    case 4: img = new ImageView(new Image("file:src/main/resources/application/sprite/decor/water.png")); break;
+                    default: img = null; break;
+                }
+                img.setFitWidth(TUILE_TAILLE);
+                img.setFitHeight(TUILE_TAILLE);
+                img.setX(s.getX() * TUILE_TAILLE);
+                img.setY(s.getY() * TUILE_TAILLE);
+                tuilesFond.getChildren().add(img);
             }
-            img.setFitWidth(TUILE_TAILLE);
-            img.setFitHeight(TUILE_TAILLE);
-            img.setX(s.getX() * TUILE_TAILLE);
-            img.setY(s.getY() * TUILE_TAILLE);
-            tuilesFond.getChildren().add(img);
         }
     }
 

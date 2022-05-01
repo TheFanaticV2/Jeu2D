@@ -11,11 +11,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             StackPane root = FXMLLoader.load(getClass().getResource("vue.fxml"));
-            Scene scene = new Scene(root, 27*48, 15*48);
+            Scene scene = new Scene(root, 11*48, 5*48);
             root.requestFocus();
             primaryStage.setTitle("Jeu2D");
             primaryStage.setResizable(false);
-            primaryStage.setMaximized(true);
+            //primaryStage.setMaximized(true);
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(event -> System.exit(0));
             primaryStage.show();
